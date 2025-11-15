@@ -1,0 +1,77 @@
+.clinic-nav {
+  background-color: #3a609bff;
+  height: 35px;
+  width: 100%;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+/* 👇 Sticky Navbar */
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999 !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+
+
+
+
+.clinic-nav {
+  background-color: #3a609bff;
+  height: 35px;
+  width: 100%;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+/* Sticky AFTER second section reaches top */
+.sticky-nav {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.navbar-wrapper {
+  width: 100%;
+  transition: 0.3s ease;
+  z-index: 10;
+}
+
+/* When second section hits top */
+.sticky-nav {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999 !important;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}

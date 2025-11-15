@@ -1,0 +1,707 @@
+
+.video-section {
+  position: relative;
+  width: 100%;
+  height: 400px; 
+  overflow: hidden;
+}
+
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1577px;
+  height: 400px;
+  object-fit: fill;
+}
+
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  height: 400px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 80px;
+}
+
+
+.Words {
+  color:#102039;
+  max-width: 600px;
+  text-align: left;
+  margin-left: 40px;
+}
+
+
+.heading {
+  font-size: 75px;
+  font-weight: bold;
+}
+
+
+.word-swap {
+  display: inline-block;
+  animation: jumpIn 0.8s ease;
+ 
+  color:#1f2b7b;
+}
+
+
+.fade-text {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.8s;
+}
+
+
+.btn-jump {
+  margin-top: 15px;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 1.2s;
+  background-color: #00e6ff;
+  border: none;
+  color: black;
+  font-weight: 600;
+  height: 50px;
+}
+
+
+@keyframes jumpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-section {
+  background-color: #f8f9ff;
+  padding: 50px 30px;
+  border-radius: 10px;
+}
+
+.welcome-section h5 {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.welcome-section p {
+  color: #444;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+
+.departments-section {
+  background-color: #f8f9fa;
+  position: relative;
+  padding-bottom: 80px;
+}
+
+.line {
+  display: inline-block;
+  width: 40px;
+  height: 2px;
+  background-color: #3f51b5;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+
+.dept-tabs {
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.dept-btn {
+  background: #fff;
+  border: none;
+  padding: 20px 42px;
+  font-weight: 500;
+  color: #333;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.dept-btn.active,
+.dept-btn:hover {
+  background: linear-gradient(90deg, #2196f3, #42a5f5);
+  color: #fff;
+}
+
+
+.dept-content {
+  background: linear-gradient(135deg, #42a5f5, #1e88e5);
+  color: white;
+  border-radius: 10px;
+  padding: 40px 30px;
+  margin-top: 5px;
+}
+
+.dept-content h4 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.dept-btn-learn {
+  background: #fff;
+  color: #000;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 8px 20px;
+  height: 70px;
+}
+
+
+.contact-side-btn {
+  position: fixed;
+  right: 0;
+  top: 40%;
+  transform: translateY(-50%);
+  background: #e3f2fd;
+  color: #0d47a1;
+  font-weight: 600;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 12px 10px;
+  border-radius: 8px 0 0 8px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.help-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  background: #0d6efd;
+  color: white;
+  font-size: 22px;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+
+.doctor-section {
+  background-color: #fff;
+  position: relative;
+}
+
+.meet-btn {
+  background: linear-gradient(90deg, #2196f3, #42a5f5);
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.meet-btn:hover { opacity: 0.9; }
+
+.doctor-card {
+  transition: all 0.3s ease;
+  align-items: center;
+  margin-top: 10px;
+}
+.doctor-img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #90caf9;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+.doctor-card:hover { transform: translateY(-5px); }
+
+.role-img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  margin-top: 6px;
+}
+
+
+
+.help-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  background: #0d6efd;
+  color: white;
+  font-size: 22px;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  border-radius: 50%;
+}
+
+
+
+.text-muted.lh-lg {
+  color: #6c757d !important;        
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.load-btn {
+  background: linear-gradient(to right, #007bff, #0dcaf0);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.load-btn:hover {
+  background: linear-gradient(to right, #0dcaf0, #007bff);
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.text-center p,
+.load-btn {
+  animation: fadeInUp 1s ease forwards;
+}
+
+
+
+.eclinic-section {
+  background-color: #f9fbff;
+  border-radius: 15px;
+  position: relative;
+}
+
+.contact-tab {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 12px;
+  font-weight: 500;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+  border-radius: 6px 0 0 6px;
+  cursor: pointer;
+}
+
+
+
+.health-programs-section {
+  background-color: #f9fbff;
+  border-radius: 15px;
+}
+
+.health-programs-section img {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.health-programs-section .small-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: 0.3s ease;
+}
+
+.health-programs-section .small-btn:hover {
+  background-color: #0056b3;
+}
+
+
+.diets-section {
+  border-top: 2px solid #e9f1ff;
+  border-bottom: 2px solid #e9f1ff;
+}
+
+.diet-tabs {
+  gap: 10px;
+}
+
+.diet-btn {
+  background-color: #fff;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  transition: 0.3s ease;
+}
+
+.diet-btn:hover,
+.diet-btn.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.diets-section img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+
+  
+
+.health-blog-section {
+  background-color: #f8f9fa;
+}
+
+.section-title {
+  color: #2f80ed;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.blog-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.blog-content {
+  padding: 15px;
+  text-align: left;
+}
+
+.blog-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.blog-subtitle {
+  color: #999;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.blog-text {
+  color: #6c757d;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.read-btn {
+  color: #2f80ed !important;
+  font-weight: 600;
+  text-decoration: none !important;
+  padding: 0;
+}
+
+.read-btn:hover {
+  color: #1a66d4 !important;
+}
+
+.btn-articles {
+  background-color: #2f80ed;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-articles:hover {
+  background-color: #1a66d4;
+}
+
+
+
+.alternative-section {
+   background-color: #f8f9fa;
+  padding: 60px 0;
+   
+}
+
+
+.alt-icon {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: #f8f9fa; 
+  height: 100%;
+}
+
+
+.alt-icon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+
+.alt-icon img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+
+.alt-icon:hover img {
+  transform: scale(1.1);
+}
+
+
+.alt-icon p {
+  color: #333;
+  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+
+.alternative-section h4 {
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+
+.alternative-section p {
+  font-size: 15px;
+  color: #6c757d;
+}
+
+
+@media (max-width: 992px) {
+  .alt-icon img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .alt-icon {
+    padding: 15px;
+  }
+
+  .alt-icon p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .alt-icon img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .alt-icon {
+    padding: 12px;
+  }
+
+  .alt-icon p {
+    font-size: 12px;
+  }
+}
+
+
+
+.franchise-section {
+  background-color: #ffffff;
+  border-top: 2px solid #e6efff;
+}
+
+.franchise-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.franchise-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.franchise-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+
+.btn-jump {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.btn-jump:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .diet-btn {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .health-programs-section img,
+  .diets-section img {
+    height: 180px;
+  }
+
+  .alt-icon img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.office-section {
+  background-color: #4577a5;
+  position: relative;
+  color: #fff;
+}
+
+.office-section .border-end {
+  border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.office-section h6 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.office-section p {
+  line-height: 1.4;
+}
+
+
+.contact-tab {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: rotate(-90deg) translateY(-50%);
+  background-color: #1a4c72;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+}
+
+
+.footer-section {
+  background-color: #0d0e10;
+}
+
+.footer-section h6 {
+  font-size: 0.9rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.footer-section p {
+  color: #e6e6e6;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.footer-section p:hover {
+  color: #007bff;
+}
+
+
+.social-icons svg {
+  margin-right: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #e6e6e6;
+  transition: color 0.3s ease;
+}
+
+.social-icons svg:hover {
+  color: #007bff;
+}
+
+
+@media (max-width: 768px) {
+  .office-section .border-end {
+    border: none !important;
+  }
+
+  .contact-tab {
+    display: none;
+  }
+}
