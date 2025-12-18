@@ -1,0 +1,328 @@
+/* ==========================================================
+   GLOBAL RESET + NO HORIZONTAL SCROLL
+========================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden !important;
+  font-family: "Arial", sans-serif;
+}
+
+/*WRAPPER + STICKY NAV */
+.navbar-wrapper {
+  width: 100%;
+  background: white;
+  transition: 0.3s ease;
+  z-index: 1000;
+}
+
+.sticky-nav {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999 !important;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+/* ==========================================================
+   DESKTOP/TABLET TOP BAR (EXACT screenshot)
+========================================================== */
+.topbar-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 30px;
+  width: 100%;
+  background: white;
+}
+
+.topbar-desktop .logo {
+  height: 50px;
+}
+
+/* CALL A DOCTOR BOX */
+.call-box {
+  text-align: center;
+}
+
+.call-box .call-number {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3a609b;
+}
+
+.call-box .call-btn {
+  background: #3a609b;
+  color: white;
+  padding: 3px 10px;
+  font-size: 11px;
+  margin-top: 3px;
+  border-radius: 3px;
+}
+
+/* 3 RIGHT BUTTONS */
+.top-buttons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.top-btn {
+  background: #ecf0f7;
+  padding: 6px 10px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #3a609b;
+  text-align: center;
+  line-height: 15px;
+}
+
+.top-btn img {
+  height: 20px;
+  display: block;
+  margin: 0 auto 3px auto;
+}
+
+/* Hide Desktop Topbar on Mobile */
+@media (max-width: 767px) {
+  .topbar-desktop { display: none !important; }
+}
+
+/* ==========================================================
+   MOBILE TOPBAR (Screenshot 2 top)
+========================================================== */
+.topbar-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .topbar-mobile {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: white;
+  }
+
+  .topbar-mobile .logo {
+    height: 42px;
+  }
+
+  .mobile-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .getapp {
+    height: 34px;
+  }
+
+  select {
+    border: 1px solid #ccc;
+    padding: 3px 6px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+
+  .hamburger-menu {
+    background: #2a90c9 !important;
+    padding: 6px 10px !important;
+    border-radius: 5px;
+  }
+}
+
+/* ==========================================================
+   MOBILE BLUE CATEGORY ROW (Screenshot 2)
+========================================================== */
+.mobile-category-row {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-category-row {
+    display: flex !important;
+    justify-content: space-around;
+    background: #2a90c9;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .mobile-category-row a {
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .mobile-category-row img {
+    height: 24px;
+    display: block;
+    margin: auto;
+    margin-bottom: 4px;
+  }
+}
+
+/* ==========================================================
+   MAIN NAVBAR (Blue row from screenshot)
+========================================================== */
+.blue-navbar {
+  background: #2a90c9 !important;
+  padding: 2px 20px !important;
+}
+
+/* MENU ROW */
+.desktop-menu {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/* HOME ICON */
+.desktop-menu .home-icon i {
+  font-size: 20px;
+  color: white;
+}
+
+/* MENU LINKS */
+.desktop-menu .dropdown-toggle,
+.desktop-menu .nav-link {
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+
+/* LANGUAGE DROPDOWN */
+/* .lang-select-desktop {
+  background: white;
+  color: hsl(202, 65%, 48%);
+  border: none;
+  flex-wrap:wrap;
+  display: flex;
+  justify-content: end;
+  padding: 2px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 3px;
+} */
+
+.lang-select-desktop {
+  margin-left: auto !important;  /* pushes to the right */
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+
+/* Hide Desktop Menu on Mobile */
+@media (max-width: 767px) {
+  .desktop-menu { display: none !important; }
+}
+
+/* ==========================================================
+   MOBILE HAMBURGER MENU CONTENT
+========================================================== */
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-menu {
+    display: block !important;
+  }
+
+  .dropdown-menu {
+    width: 100% !important;
+    left: 0 !important;
+    top: 45px !important;
+    z-index: 99999 !important;
+    position: absolute !important;
+    border-radius: 0 !important;
+  }
+
+  .dropdown-item {
+    padding: 14px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ==========================================================
+   FIX: Dropdown behind banner issue
+========================================================== */
+.dropdown-menu {
+  z-index: 999999 !important;
+  background: white !important;
+}
+.top-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.top-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #275a8a;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.top-btn img {
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #3a609b;
+  object-fit: contain;
+}
+
+.top-btn:hover {
+  color: #1f4d7a;
+}
+.mega-dropdown:hover .mega-menu {
+  display: block !important;
+}
+
+.mega-menu {
+  width: 100%;
+  left: 0;
+  right: 0;
+  display: none;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.mega-menu a.dropdown-item {
+  font-size: 14px;
+  padding-left: 0;
+}
+
+.mega-menu h6 {
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+.mega-menu p {
+  margin-top: 8px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #333;
+}

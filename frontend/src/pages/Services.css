@@ -1,0 +1,168 @@
+/* ===== Base ===== */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Banner */
+.banner {
+  background: #e3f2fd;
+  text-align: center;
+  padding: 20px 0;
+}
+.banner h1 {
+  margin: 0;
+  color: #1e88e5;
+}
+
+/* ===== Main Layout ===== */
+.main-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.left-content {
+  flex: 3;
+  max-width: 65%;
+}
+
+.main-img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  max-width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+/* ===== Quick Appointment ===== */
+.quick-appointment .doctor-card {
+  text-align: center;
+  margin-bottom: 25px;
+  cursor: pointer;
+}
+
+.quick-appointment .doctor-card img.doctor-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px auto;
+}
+
+.view-all {
+  width: 100%;
+  background: #1e88e5;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+/* ============================================= */
+/*           FULL RESPONSIVE DESIGN              */
+/* ============================================= */
+
+/* ===== Tablet View (max-width: 992px) ===== */
+@media (max-width: 992px) {
+  .main-section {
+    padding: 25px;
+  }
+
+  .left-content {
+    max-width: 100%;
+    flex: 100%;
+  }
+
+  .sidebar {
+    max-width: 100%;
+    flex: 100%;
+  }
+
+  .sidebar .card {
+    margin-top: 10px;
+  }
+
+  .quick-appointment .doctor-card img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* ===== Mobile Large (max-width: 768px) ===== */
+@media (max-width: 768px) {
+  .main-section {
+    padding: 20px;
+    flex-direction: column;
+  }
+
+  .left-content {
+    max-width: 100%;
+  }
+
+  .sidebar {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .banner h1 {
+    font-size: 22px;
+  }
+
+  .main-img {
+    height: auto;
+  }
+
+  .services ul li {
+    font-size: 15px;
+  }
+}
+
+/* ===== Mobile Small (max-width: 480px) ===== */
+@media (max-width: 480px) {
+  .main-section {
+    padding: 15px;
+  }
+
+  .banner h1 {
+    font-size: 20px;
+  }
+
+  .left-content h2 {
+    font-size: 18px;
+  }
+
+  .quick-appointment .doctor-card img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .services ul li {
+    padding: 8px 0;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .view-all {
+    padding: 10px;
+  }
+}

@@ -1,0 +1,157 @@
+.recipe-page {
+  background: #f7fbff;
+  padding: 20px 0 60px;
+  font-family: Arial;
+}
+
+.recipe-top-title {
+  text-align: center;
+  font-size: 26px;
+  color: #003d6b;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.recipe-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  gap: 40px;
+}
+
+/******** LEFT ********/
+.left-section {
+  flex: 1;
+}
+
+.recipe-name {
+  font-size: 22px;
+  color: #003d6b;
+  margin-bottom: 20px;
+}
+
+.meta-box {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 20px;
+}
+
+.meta-box h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #003d6b;
+}
+
+.meta-box p {
+  margin: 3px 0 0;
+}
+
+.description {
+  margin: 10px 0 20px;
+  line-height: 1.8;
+}
+
+/****** Nutrition Grid ******/
+.section-title {
+  font-size: 20px;
+  margin-top: 20px;
+  color: #003d6b;
+}
+
+.nutrition-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+  gap: 15px 40px;
+}
+
+.nutrition-grid a {
+  color: #007bff;
+  font-weight: bold;
+  display: block;
+}
+
+.nutrition-grid p {
+  margin: 2px 0 0;
+}
+
+/********* INGREDIENTS *********/
+.ingredients-section {
+  margin-top: 10px;
+}
+
+.ingredient-group h4 {
+  font-size: 16px;
+  color: #003d6b;
+  margin-bottom: 5px;
+}
+
+.ingredient-group ul {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.ingredient-group ul li {
+  margin-bottom: 6px;
+}
+
+/********* PROCEDURE *********/
+.procedure-list {
+  margin-left: 20px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.back-btn {
+  background: #007bff;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.share-row {
+  margin-top: 20px;
+}
+
+.share-row button {
+  margin-right: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.fb { background: #3b5998; }
+.tw { background: #1da1f2; }
+.pi { background: #bd081c; }
+.li { background: #0077b5; }
+.wa { background: #25d366; }
+.em { background: #555; }
+
+/******** RIGHT ********/
+.right-section {
+  width: 350px;
+}
+
+.image-box img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.allowed-box {
+  background: #ffffff;
+  border: 1px solid #d6e4f2;
+  padding: 12px;
+  border-radius: 5px;
+}
+
+.allowed-box h4 {
+  margin: 0;
+  margin-bottom: 5px;
+}

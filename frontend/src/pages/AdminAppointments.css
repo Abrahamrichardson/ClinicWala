@@ -1,0 +1,91 @@
+/* ============================= */
+/* Admin Appointments Page */
+/* ============================= */
+
+.container {
+  max-width: 1200px;
+}
+
+/* Page Title */
+h3 {
+  letter-spacing: 0.3px;
+}
+
+/* Card Styling */
+.card {
+  border-radius: 12px;
+  border: none;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+/* Table */
+.table {
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.table thead th {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.table td {
+  white-space: nowrap;
+}
+
+/* Booking ID Badge */
+.badge.bg-primary {
+  font-size: 12px;
+  padding: 6px 8px;
+}
+
+/* Status Badge */
+.badge.bg-success,
+.badge.bg-warning {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 20px;
+}
+
+/* Action Buttons */
+.table button {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* Hover Effect */
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background 0.2s ease;
+}
+
+/* Empty State */
+.card-body p {
+  font-size: 15px;
+}
+
+/* Spinner Center */
+.text-center.mt-5 {
+  min-height: 200px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .table {
+    font-size: 13px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  .table button {
+    margin-bottom: 4px;
+  }
+}

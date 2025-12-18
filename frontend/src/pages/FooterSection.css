@@ -1,0 +1,21 @@
+.office-section {
+  background: #4a82b1;
+}
+
+.footer-section {
+  background: #0d121a;
+}
+
+.office-section .border-end {
+  border-right: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+.social-icons svg {
+  font-size: 20px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.social-icons svg:hover {
+  opacity: 0.7;
+}
