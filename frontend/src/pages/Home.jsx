@@ -129,6 +129,7 @@ const [selectedDoctor, setSelectedDoctor] = useState(null);
 
 const handleDoctorClick = (doctor) => {
   setSelectedDoctor(doctor);
+
   setShowModal(true);
 };
 
