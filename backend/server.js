@@ -4,7 +4,6 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
-const doctorRoutes = require("./routes/doctorRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const userRoutes = require("./routes/userRoutes");
 
@@ -27,7 +26,6 @@ mongoose
 // ===================================
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);              // 👈 USERS
-app.use("/api/doctors", doctorRoutes);
 app.use("/api/appointments", appointmentRoutes);
 
 // ===================================

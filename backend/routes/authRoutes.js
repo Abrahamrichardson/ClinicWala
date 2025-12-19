@@ -12,11 +12,11 @@ const generateToken = (id, role) => {
   });
 };
 
-// ================= ADMIN CREDENTIALS (FIXED) =================
+// ================= ADMIN CREDENTIALS =================
 const ADMIN_EMAIL = "abrahamrichardson9970@";
 const ADMIN_PASSWORD = "Abraham9970@";
 
-// ================= REGISTER (USERS ONLY) =================
+// ================= REGISTER (PATIENT ONLY) =================
 router.post("/register", async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
@@ -33,13 +33,14 @@ router.post("/register", async (req, res) => {
       email,
       phone,
       password: hashed,
-      role: "user", // ❗ users only
+      role: "patient", // 🔥 FIXED
     });
 
     res.status(201).json({
       success: true,
       token: generateToken(user._id, user.role),
       role: user.role,
+      userId: user._id,
     });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
@@ -51,11 +52,10 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 🔐 FIXED ADMIN LOGIN
+    // 🔐 ADMIN LOGIN
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       let admin = await User.findOne({ email });
 
-      // create admin once (if not exists)
       if (!admin) {
         const hashed = await bcrypt.hash(password, 10);
         admin = await User.create({
@@ -64,8 +64,7 @@ router.post("/login", async (req, res) => {
           password: hashed,
           role: "admin",
         });
-      }console.log("LOGIN BODY:", req.body);
-
+      }
 
       return res.json({
         success: true,
@@ -74,7 +73,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // 👤 NORMAL USER LOGIN
+    // 👤 PATIENT / DOCTOR LOGIN
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -89,6 +88,8 @@ router.post("/login", async (req, res) => {
       success: true,
       token: generateToken(user._id, user.role),
       role: user.role,
+      userId: user._id,
+      doctorId: user.doctorId || null, // 🔥 IMPORTANT
     });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });

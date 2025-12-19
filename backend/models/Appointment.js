@@ -1,55 +1,59 @@
 const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema({
-  // ✅ Frontend doctor ID (string like "1")
+  // 🔥 ADD THIS
+  patientId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+
   doctorId: {
     type: String,
-    required: true
+    required: true,
   },
 
   doctorName: {
     type: String,
-    required: true
+    required: true,
   },
 
   specialization: {
     type: String,
-    required: true
+    required: true,
   },
 
   doctorCity: {
     type: String,
-    required: true
+    required: true,
   },
 
   fee: {
     type: Number,
-    required: true
+    required: true,
   },
 
   date: {
     type: String,
-    required: true
+    required: true,
   },
 
   time: {
     type: String,
-    required: true
+    required: true,
   },
 
-  reason: {
-    type: String
-  },
+  reason: String,
 
   status: {
     type: String,
-    default: "Pending"
+    default: "Pending",
   },
 
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

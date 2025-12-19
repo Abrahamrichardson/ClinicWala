@@ -12,8 +12,10 @@ import FooterSection from "./pages/FooterSection";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-/* ROUTE GUARD */
+/* ROUTE GUARDS */
 import AdminRoute from "./routes/AdminRoute";
+import DoctorRoute from "./routes/DoctorRoute";
+import PatientRoute from "./routes/PatientRoute";
 
 /* PUBLIC PAGES */
 import Home from "./pages/Home";
@@ -33,12 +35,17 @@ import OrderTest from "./pages/OrderTest";
 import GetMedicines from "./pages/GetMedicines";
 import RecipeDetails from "./pages/RecipeDetails";
 
-/* ADMIN PAGES */
+/* ADMIN */
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAppointments from "./pages/AdminAppointments";
 import AdminDoctors from "./pages/AdminDoctors";
+import AdminUsers from "./pages/AdminUsers";
 import UsersPage from "./pages/UsersPage";
-import AdminUsers from "./pages/Admin Users";
+
+/* DOCTOR & PATIENT */
+import DoctorDashboard from "./pages/doctor/DoctorDashboard";
+import PatientDashboard from "./pages/patient/PatientDashboard";
+
 export default function App() {
   const location = useLocation();
 
@@ -46,12 +53,15 @@ export default function App() {
     AOS.init({ duration: 800, easing: "ease-in-out" });
   }, []);
 
-  // Hide navbar & footer on admin pages
-  const isAdminPage = location.pathname.startsWith("/admin");
+  // Hide navbar & footer on dashboard pages
+  const hideLayout =
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/doctor") ||
+    location.pathname.startsWith("/patient");
 
   return (
     <>
-      {!isAdminPage && <NavbarClinicwala />}
+      {!hideLayout && <NavbarClinicwala />}
 
       <Routes>
         {/* ================= PUBLIC ================= */}
@@ -60,20 +70,18 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
 
-        
-       {/* SERVICES */}
-<Route path="/services" element={<Services />} />
-<Route path="/telemedicine" element={<EClinic />} />
-<Route path="/eclinic" element={<EClinic />} />   {/* ✅ ADD THIS */}
-<Route path="/pathology" element={<Services />} />
-<Route path="/health-records" element={<Services />} />
-
+        {/* SERVICES */}
+        <Route path="/services" element={<Services />} />
+        <Route path="/telemedicine" element={<EClinic />} />
+        <Route path="/eclinic" element={<EClinic />} />
+        <Route path="/pathology" element={<Services />} />
+        <Route path="/health-records" element={<Services />} />
 
         {/* FOOD / DIET */}
         <Route path="/food-diet" element={<FoodDiet />} />
         <Route path="/food-diet/:recipeName" element={<RecipeDetails />} />
 
-        {/* BOOK DOCTOR (USER) */}
+        {/* BOOK DOCTOR */}
         <Route path="/doctors" element={<BookDoctor />} />
         <Route path="/book-doctor" element={<BookDoctor />} />
         <Route path="/doctor/:id" element={<DoctorDetails />} />
@@ -91,28 +99,17 @@ export default function App() {
         <Route path="/order-test" element={<OrderTest />} />
         <Route path="/get-medicines" element={<GetMedicines />} />
 
-        {/* ================= ADMIN ONLY ================= */}
-
-        {/* Redirect /admin → /admin/dashboard */}
+        {/* ================= ADMIN ================= */}
         <Route
           path="/admin"
           element={<Navigate to="/admin/dashboard" replace />}
         />
-        <Route path="/admin/users" element={<AdminUsers />} />
+
         <Route
           path="/admin/dashboard"
           element={
             <AdminRoute>
               <AdminDashboard />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/users"
-          element={
-            <AdminRoute>
-              <UsersPage />
             </AdminRoute>
           }
         />
@@ -134,9 +131,38 @@ export default function App() {
             </AdminRoute>
           }
         />
+
+        <Route
+          path="/admin/users"
+          element={
+            <AdminRoute>
+              <AdminUsers />
+            </AdminRoute>
+          }
+        />
+
+        {/* ================= DOCTOR ================= */}
+        <Route
+          path="/doctor/dashboard"
+          element={
+            <DoctorRoute>
+              <DoctorDashboard />
+            </DoctorRoute>
+          }
+        />
+
+        {/* ================= PATIENT ================= */}
+        <Route
+          path="/patient/dashboard"
+          element={
+            <PatientRoute>
+              <PatientDashboard />
+            </PatientRoute>
+          }
+        />
       </Routes>
 
-      {!isAdminPage && <FooterSection />}
+      {!hideLayout && <FooterSection />}
     </>
   );
 }

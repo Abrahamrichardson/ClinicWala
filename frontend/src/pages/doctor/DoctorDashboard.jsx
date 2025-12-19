@@ -1,160 +1,70 @@
-// import React, { useEffect, useState } from "react";
-// import axiosClient from "../../api/axiosClient";
-
-// export default function DoctorDashboard() {
-//   const [appts, setAppts] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   const load = async () => {
-//     try {
-//       const res = await axiosClient.get("/doctors/appointments/my");
-//       setAppts(res.data);
-//     } catch {
-//       alert("Failed to load appointments");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     load();
-//   }, []);
-
-//   if (loading) return <p>Loading...</p>;
-
-//   return (
-//     <div className="doctor-dashboard">
-//       <h1>Doctor Dashboard</h1>
-//       <h3>My Appointments</h3>
-
-//       {appts.length === 0 ? (
-//         <p>No appointments yet.</p>
-//       ) : (
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>Patient</th>
-//               <th>Date</th>
-//               <th>Status</th>
-//               <th>Fees</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {appts.map((a) => (
-//               <tr key={a._id}>
-//                 <td>{a.user?.name}</td>
-//                 <td>{new Date(a.date).toLocaleString()}</td>
-//                 <td>{a.status}</td>
-//                 <td>₹{a.fees}</td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       )}
-//     </div>
-//   );
-// }
-
-
-
-
 import React, { useEffect, useState } from "react";
 import axiosClient from "../../api/axiosClient";
+import { Table, Button, Badge } from "react-bootstrap";
 
 export default function DoctorDashboard() {
-  const [appts, setAppts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [appointments, setAppointments] = useState([]);
 
-  const loadAppointments = async () => {
-    try {
-      // CORRECT ENDPOINT
-      const res = await axiosClient.get("/appointments/doctor/my");
-      setAppts(res.data);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to load appointments");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const doctorId = localStorage.getItem("userId");
 
   useEffect(() => {
     loadAppointments();
   }, []);
 
-  // Update status (confirm / cancel)
-  const updateStatus = async (id, status) => {
-    try {
-      await axiosClient.patch(`/appointments/${id}/status`, { status });
-      loadAppointments();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to update");
-    }
+  const loadAppointments = async () => {
+    const res = await axiosClient.get(
+      `/appointments/doctor/${doctorId}`
+    );
+    setAppointments(res.data.appointments);
   };
 
-  if (loading) return <p>Loading...</p>;
+  const markCompleted = async (id) => {
+    await axiosClient.put(`/appointments/${id}/complete`);
+    loadAppointments();
+  };
 
   return (
-    <div className="doctor-dashboard container py-4">
-      <h2 className="mb-4">Doctor Dashboard</h2>
+    <div className="container mt-4">
+      <h3>👨‍⚕️ Doctor Dashboard</h3>
 
-      <h4>My Appointments</h4>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
-      {appts.length === 0 ? (
-        <p>No appointments yet.</p>
-      ) : (
-        <table className="table table-bordered table-striped mt-3">
-          <thead>
-            <tr>
-              <th>Patient</th>
-              <th>Phone</th>
-              <th>Date & Time</th>
-              <th>Status</th>
-              <th>Action</th>
+        <tbody>
+          {appointments.map((a) => (
+            <tr key={a._id}>
+              <td>{a.patientId?.name}</td>
+              <td>{a.date}</td>
+              <td>{a.time}</td>
+              <td>{a.reason}</td>
+              <td>
+                <Badge bg={a.status === "Completed" ? "success" : "warning"}>
+                  {a.status}
+                </Badge>
+              </td>
+              <td>
+                {a.status !== "Completed" && (
+                  <Button
+                    size="sm"
+                    onClick={() => markCompleted(a._id)}
+                  >
+                    Mark Completed
+                  </Button>
+                )}
+              </td>
             </tr>
-          </thead>
-
-          <tbody>
-            {appts.map((a) => (
-              <tr key={a._id}>
-                <td>{a.user?.name}</td>
-                <td>{a.user?.phone}</td>
-                <td>{new Date(a.date).toLocaleString()}</td>
-                <td>{a.status}</td>
-
-                <td>
-                  {a.status === "pending" && (
-                    <>
-                      <button
-                        className="btn btn-success btn-sm me-2"
-                        onClick={() => updateStatus(a._id, "confirmed")}
-                      >
-                        Confirm
-                      </button>
-
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => updateStatus(a._id, "cancelled")}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-
-                  {a.status === "confirmed" && (
-                    <span className="text-success fw-bold">✔ Confirmed</span>
-                  )}
-
-                  {a.status === "cancelled" && (
-                    <span className="text-danger fw-bold">✖ Cancelled</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }
