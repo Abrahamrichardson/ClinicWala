@@ -6,7 +6,7 @@ export default function DoctorDashboard() {
   const [appointments, setAppointments] = useState([]);
 
   const doctorId = localStorage.getItem("userId");
-
+console.log("DASHBOARD doctorId 👉", doctorId);
   useEffect(() => {
     loadAppointments();
   }, []);

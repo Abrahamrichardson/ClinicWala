@@ -2,7 +2,7 @@ const express = require("express");
 const Appointment = require("../models/Appointment");
 const protect = require("../middleware/protect"); // 🔥 FIX
 const router = express.Router();
-
+const mongoose = require("mongoose");
 
 // ===================================================
 // 1️⃣ GET ALL APPOINTMENTS (ADMIN ONLY)
@@ -66,22 +66,33 @@ router.put("/approve/:id", protect, async (req, res) => {
 });
 
 
+
 // ===================================================
-// 5️⃣ GET APPOINTMENTS BY DOCTOR (DOCTOR DASHBOARD)
-// doctorId = FRONTEND doctor id (ex: "doc1")
+// 5️⃣ GET APPOINTMENTS FOR LOGGED-IN DOCTOR (FIXED)
 // ===================================================
-router.get("/doctor/:doctorId", protect, async (req, res) => {
-  if (req.user.role !== "doctor") {
-    return res.status(403).json({ message: "Doctors only" });
+router.get("/doctor", protect, async (req, res) => {
+  try {
+    if (req.user.role !== "doctor") {
+      return res.status(403).json({ message: "Doctors only" });
+    }
+
+    // 🔥 IMPORTANT: take doctorId from logged-in user
+    const doctorId = req.user.doctorId;
+
+    console.log("LOGGED IN DOCTOR ID 👉", doctorId);
+
+    const apps = await Appointment.find({
+      doctorId: new mongoose.Types.ObjectId(doctorId),
+    }).sort({ _id: -1 });
+
+    console.log("APPOINTMENTS FOUND 👉", apps.length);
+
+    res.json({ appointments: apps });
+  } catch (err) {
+    console.error("DOCTOR APPOINTMENT ERROR:", err);
+    res.status(500).json({ message: "Server error" });
   }
-
-  const apps = await Appointment.find({
-    doctorId: req.params.doctorId,
-  }).sort({ _id: -1 });
-
-  res.json({ appointments: apps });
 });
-
 
 // ===================================================
 // 6️⃣ MARK APPOINTMENT AS COMPLETED (DOCTOR)
