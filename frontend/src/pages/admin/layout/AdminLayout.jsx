@@ -1,10 +1,12 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
 
-export default function AdminLayout({ children }) {
+export default function AdminLayout() {
   return (
     <div className="container-fluid">
       <div className="row min-vh-100">
+
         {/* Sidebar */}
         <div className="col-12 col-md-3 col-lg-2 p-0 bg-dark">
           <AdminSidebar />
@@ -12,8 +14,9 @@ export default function AdminLayout({ children }) {
 
         {/* Content */}
         <div className="col-12 col-md-9 col-lg-10 bg-light p-3 p-md-4">
-          {children}
+          <Outlet /> {/* 🔥 REQUIRED */}
         </div>
+
       </div>
     </div>
   );

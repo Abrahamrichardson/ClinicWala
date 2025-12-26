@@ -1,57 +1,45 @@
 import axiosClient from "./axiosClient";
 
 // ===============================
-// USERS
+// DASHBOARD
 // ===============================
-
-// Get all users
-export const getAllUsers = () => {
-  return axiosClient.get("/admin/users");
-};
-
-// Change user role
-export const updateUserRole = (userId, role) => {
-  return axiosClient.patch(`/admin/users/${userId}/role`, { role });
-};
-
-// Delete user (backend supports this)
-export const deleteUser = (userId) => {
-  return axiosClient.delete(`/admin/users/${userId}`);
-};
-
-
-// ===============================
-// APPOINTMENTS
-// ===============================
-
-// Get all appointments
-export const getAppointments = () => {
-  return axiosClient.get("/admin/appointments");
+export const getAdminDashboard = () => {
+  return axiosClient.get("/admin/dashboard");
 };
 
 // ===============================
-// DOCTORS
+// USERS (PATIENTS)
 // ===============================
+export const getUsers = () => {
+  return axiosClient.get("/users");
+};
 
-// Create new doctor (works)
+export const deleteUser = (id) => {
+  return axiosClient.delete(`/users/${id}`);
+};
+
+export const updateUser = (id, data) => {
+  return axiosClient.put(`/users/${id}`, data);
+};
+
+// ===============================
+// DOCTORS (ADMIN)
+// ===============================
 export const createDoctor = (data) => {
   return axiosClient.post("/admin/doctors", data);
 };
 
-// Get all doctors — use PUBLIC route, not admin route
-export const getAllDoctors = () => {
-  return axiosClient.get("/doctors");
+export const getAdminDoctors = () => {
+  return axiosClient.get("/admin/doctors");
 };
 
-// Doctor delete DOES NOT EXIST in backend — removed
-// If you want delete doctor: add route in backend
-
+export const deleteDoctor = (id) => {
+  return axiosClient.delete(`/admin/doctors/${id}`);
+};
 
 // ===============================
-// ANALYTICS
+// APPOINTMENTS
 // ===============================
-
-// Admin Stats (if backend has it)
-export const getAdminStats = () => {
-  return axiosClient.get("/admin/stats");
+export const getAppointments = () => {
+  return axiosClient.get("/appointments");
 };

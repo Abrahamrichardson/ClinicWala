@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axiosClient from "../../api/axiosClient";
-import AdminLayout from "./layout/AdminLayout";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
@@ -16,32 +15,32 @@ export default function AdminDashboard() {
 
   const perPage = 10;
 
-  /* ================= LOAD USERS ================= */
+  // ================= LOAD USERS =================
   useEffect(() => {
     loadUsers();
   }, []);
 
   const loadUsers = async () => {
     try {
-      const res = await axiosClient.get("/users"); // ✅ baseURL already /api
+      const res = await axiosClient.get("/users");
       setUsers(res.data || []);
     } catch (err) {
-      console.error("LOAD USERS ERROR", err);
+      console.error("LOAD USERS ERROR:", err);
     }
   };
 
-  /* ================= FILTER ================= */
+  // ================= SEARCH =================
   const filtered = users.filter((u) =>
     `${u.name} ${u.email} ${u.phone}`
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
-  /* ================= PAGINATION ================= */
+  // ================= PAGINATION =================
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
   const data = filtered.slice((page - 1) * perPage, page * perPage);
 
-  /* ================= SELECT ================= */
+  // ================= SELECT =================
   const toggleSelect = (id) => {
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
@@ -56,12 +55,9 @@ export default function AdminDashboard() {
     }
   };
 
-  /* ================= BULK DELETE ================= */
+  // ================= BULK DELETE =================
   const bulkDelete = async () => {
-    if (!selected.length) {
-      alert("Select users to delete");
-      return;
-    }
+    if (!selected.length) return alert("Select users");
 
     if (!window.confirm("Delete selected users?")) return;
 
@@ -71,31 +67,24 @@ export default function AdminDashboard() {
       );
       setSelected([]);
       loadUsers();
-    } catch (err) {
+    } catch {
       alert("Bulk delete failed");
     }
   };
 
-  /* ================= ROLE UPDATE ================= */
+  // ================= ROLE UPDATE =================
   const changeRole = async (id, role) => {
     try {
       await axiosClient.put(`/users/${id}`, { role });
       loadUsers();
-    } catch (err) {
-      alert("Failed to update role");
+    } catch {
+      alert("Role update failed");
     }
   };
 
-  /* ================= EXPORT ================= */
+  // ================= EXPORT =================
   const exportCSV = () => {
-    const rows = users.map((u) => ({
-      Name: u.name,
-      Email: u.email,
-      Phone: u.phone,
-      Role: u.role,
-    }));
-
-    const ws = XLSX.utils.json_to_sheet(rows);
+    const ws = XLSX.utils.json_to_sheet(users);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Users");
     XLSX.writeFile(wb, "users.csv");
@@ -117,182 +106,155 @@ export default function AdminDashboard() {
     doc.save("users.pdf");
   };
 
-  /* ================= EDIT ================= */
+  // ================= SAVE EDIT =================
   const saveEdit = async () => {
     try {
       await axiosClient.put(`/users/${editUser._id}`, editUser);
       setEditUser(null);
       loadUsers();
-    } catch (err) {
+    } catch {
       alert("Update failed");
     }
   };
 
   return (
-    <AdminLayout>
-      <div className="manage-user-wrapper">
-        {/* HEADER */}
-        <div className="breadcrumb-box">
-          <span className="module-name">User Module</span>
-          <span className="separator">•</span>
-          <span className="page-name">Manage User</span>
+    <div className="manage-user-wrapper">
+      {/* HEADER */}
+      <div className="breadcrumb-box">
+        <span className="module-name">User Module</span>
+        <span className="separator">•</span>
+        <span className="page-name">Manage Users</span>
+      </div>
+
+      <div className="user-card">
+        <h2 className="title">Manage Users</h2>
+
+        {/* TOP BAR */}
+        <div className="top-bar">
+          <input
+            className="search-input"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
+          />
+
+          <div className="actions">
+            <button onClick={exportCSV}>CSV</button>
+            <button onClick={exportExcel}>EXCEL</button>
+            <button onClick={exportPDF}>PDF</button>
+            <button className="danger" onClick={bulkDelete}>
+              Delete
+            </button>
+          </div>
         </div>
 
-        <div className="user-card">
-          <h2 className="title">Manage User</h2>
+        {/* TABLE */}
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  checked={data.length && selected.length === data.length}
+                  onChange={toggleSelectAll}
+                />
+              </th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Password</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-          {/* TOP BAR */}
-          <div className="top-bar">
-            <input
-              className="search-input"
-              placeholder="Search"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-            />
-
-            <div className="actions">
-              <button onClick={exportCSV}>CSV</button>
-              <button onClick={exportExcel}>EXCEL</button>
-              <button onClick={exportPDF}>PDF</button>
-              <button className="danger" onClick={bulkDelete}>
-                Delete
-              </button>
-            </div>
-          </div>
-
-          {/* TABLE */}
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th>
+          <tbody>
+            {data.map((u) => (
+              <tr key={u._id}>
+                <td>
                   <input
                     type="checkbox"
-                    checked={
-                      data.length > 0 && selected.length === data.length
-                    }
-                    onChange={toggleSelectAll}
+                    checked={selected.includes(u._id)}
+                    onChange={() => toggleSelect(u._id)}
                   />
-                </th>
-                <th>Name</th>
-                <th>E-mail ID</th>
-                <th>Contact No</th>
-                <th>Permission</th>
-                <th>Password</th>
-                <th>Action</th>
+                </td>
+                <td>{u.name}</td>
+                <td>{u.email}</td>
+                <td>{u.phone}</td>
+                <td>
+                  <select
+                    value={u.role}
+                    onChange={(e) => changeRole(u._id, e.target.value)}
+                  >
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </td>
+                <td>********</td>
+                <td>
+                  <FaEdit onClick={() => setEditUser(u)} />
+                  <FaTrash
+                    onClick={() =>
+                      axiosClient.delete(`/users/${u._id}`).then(loadUsers)
+                    }
+                  />
+                </td>
               </tr>
-            </thead>
+            ))}
 
-            <tbody>
-              {data.map((u) => (
-                <tr key={u._id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selected.includes(u._id)}
-                      onChange={() => toggleSelect(u._id)}
-                    />
-                  </td>
+            {!data.length && (
+              <tr>
+                <td colSpan="7">No users found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
-                  <td>{u.name}</td>
-                  <td>{u.email}</td>
-                  <td>{u.phone}</td>
-
-                  {/* ROLE DROPDOWN */}
-                  <td>
-                    <select
-                      value={u.role}
-                      onChange={(e) =>
-                        changeRole(u._id, e.target.value)
-                      }
-                    >
-                      <option value="user">User</option>
-                      <option value="doctor">Doctor</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  </td>
-
-                  <td>********</td>
-
-                  <td className="action-col">
-                    <FaEdit
-                      className="edit-icon"
-                      onClick={() => setEditUser(u)}
-                    />
-                    <FaTrash
-                      className="delete-icon"
-                      onClick={() =>
-                        axiosClient
-                          .delete(`/users/${u._id}`)
-                          .then(loadUsers)
-                      }
-                    />
-                  </td>
-                </tr>
-              ))}
-
-              {data.length === 0 && (
-                <tr>
-                  <td colSpan="7" className="empty-row">
-                    No users found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-
-          {/* PAGINATION */}
-          <div className="pagination">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              ← Prev
-            </button>
-
-            <span>
-              Page {page} of {totalPages}
-            </span>
-
-            <button
-              disabled={page === totalPages}
-              onClick={() => setPage(page + 1)}
-            >
-              Next →
-            </button>
-          </div>
+        {/* PAGINATION */}
+        <div className="pagination">
+          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+            ← Prev
+          </button>
+          <span>
+            Page {page} of {totalPages}
+          </span>
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            Next →
+          </button>
         </div>
+      </div>
 
-        {/* EDIT MODAL */}
-        {editUser && (
-          <div className="modal">
-            <div className="modal-box">
-              <h3>Edit User</h3>
-
-              <input
-                value={editUser.name}
-                onChange={(e) =>
-                  setEditUser({ ...editUser, name: e.target.value })
-                }
-              />
-
-              <input
-                value={editUser.email}
-                onChange={(e) =>
-                  setEditUser({ ...editUser, email: e.target.value })
-                }
-              />
-
-              <div className="modal-actions">
-                <button onClick={saveEdit}>Save</button>
-                <button onClick={() => setEditUser(null)}>Cancel</button>
-              </div>
+      {/* EDIT MODAL */}
+      {editUser && (
+        <div className="modal">
+          <div className="modal-box">
+            <h3>Edit User</h3>
+            <input
+              value={editUser.name}
+              onChange={(e) =>
+                setEditUser({ ...editUser, name: e.target.value })
+              }
+            />
+            <input
+              value={editUser.email}
+              onChange={(e) =>
+                setEditUser({ ...editUser, email: e.target.value })
+              }
+            />
+            <div className="modal-actions">
+              <button onClick={saveEdit}>Save</button>
+              <button onClick={() => setEditUser(null)}>Cancel</button>
             </div>
           </div>
-        )}
-      </div>
-    </AdminLayout>
+        </div>
+      )}
+    </div>
   );
 }

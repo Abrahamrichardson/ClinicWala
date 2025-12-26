@@ -5,7 +5,7 @@ const User = require("../models/User");
 // GET all users (ADMIN)
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const users = await User.find().select();
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: "Server error" });

@@ -11,10 +11,6 @@ import doc10 from "../assets/12.jpg";
 import doc11 from "../assets/13.jpg";
 import doc12 from "../assets/25.jpg";
 import doc13 from "../assets/41.jpg";
-import doc14 from "../assets/42.png";
-import doc15 from "../assets/4.jpg";
-import doc16 from "../assets/2.jpg";
-
 export const DOCTORS = [
   {
     id: 1,
@@ -24,7 +20,9 @@ export const DOCTORS = [
     exp: "15 Years",
     fee: 500,
     image: doc1,
-    bio: "Specialist in heart diseases, cardiac surgery and angioplasty."
+    bio: "Specialist in heart diseases, cardiac surgery and angioplasty.",
+    lat: 11.0168,
+    lng: 76.9558,
   },
   {
     id: 2,
@@ -34,7 +32,9 @@ export const DOCTORS = [
     exp: "10 Years",
     fee: 400,
     image: doc2,
-    bio: "Expert in skin care, acne treatment, hair fall and cosmetic dermatology."
+    bio: "Expert in skin care, acne treatment, hair fall and cosmetic dermatology.",
+    lat: 11.3410,
+    lng: 77.7172,
   },
   {
     id: 3,
@@ -44,7 +44,9 @@ export const DOCTORS = [
     exp: "8 Years",
     fee: 350,
     image: doc3,
-    bio: "Experienced pediatrician focused on child growth, vaccines and neonatal care."
+    bio: "Experienced pediatrician focused on child growth, vaccines and neonatal care.",
+    lat: 11.6643,
+    lng: 78.1460,
   },
   {
     id: 4,
@@ -54,7 +56,9 @@ export const DOCTORS = [
     exp: "12 Years",
     fee: 600,
     image: doc4,
-    bio: "Treats brain, nerve and spinal disorders with advanced diagnostics."
+    bio: "Treats brain, nerve and spinal disorders with advanced diagnostics.",
+    lat: 9.9252,
+    lng: 78.1198,
   },
   {
     id: 5,
@@ -64,7 +68,9 @@ export const DOCTORS = [
     exp: "14 Years",
     fee: 550,
     image: doc5,
-    bio: "Specialist in pregnancy care, PCOS, infertility and women's health."
+    bio: "Specialist in pregnancy care, PCOS, infertility and women's health.",
+    lat: 11.1085,
+    lng: 77.3411,
   },
   {
     id: 6,
@@ -74,7 +80,9 @@ export const DOCTORS = [
     exp: "11 Years",
     fee: 650,
     image: doc6,
-    bio: "Bone & joint specialist, expert in fractures, knee pain & arthritis."
+    bio: "Bone & joint specialist, expert in fractures, knee pain & arthritis.",
+    lat: 13.0827,
+    lng: 80.2707,
   },
   {
     id: 7,
@@ -84,7 +92,9 @@ export const DOCTORS = [
     exp: "9 Years",
     fee: 300,
     image: doc7,
-    bio: "Dental surgeon with experience in braces, root canal and cosmetic dentistry."
+    bio: "Dental surgeon with experience in braces, root canal and cosmetic dentistry.",
+    lat: 11.3410,
+    lng: 77.7172,
   },
   {
     id: 8,
@@ -94,7 +104,9 @@ export const DOCTORS = [
     exp: "7 Years",
     fee: 400,
     image: doc8,
-    bio: "Treats ear, nose, throat disorders; expert in sinus and hearing problems."
+    bio: "Treats ear, nose, throat disorders; expert in sinus and hearing problems.",
+    lat: 11.0168,
+    lng: 76.9558,
   },
   {
     id: 9,
@@ -104,7 +116,9 @@ export const DOCTORS = [
     exp: "13 Years",
     fee: 500,
     image: doc9,
-    bio: "Expert in depression, anxiety, stress management and counselling."
+    bio: "Expert in depression, anxiety, stress management and counselling.",
+    lat: 10.7905,
+    lng: 78.7047,
   },
   {
     id: 10,
@@ -114,7 +128,9 @@ export const DOCTORS = [
     exp: "10 Years",
     fee: 600,
     image: doc10,
-    bio: "Treats kidney stones, urinary infections, prostate disorders."
+    bio: "Treats kidney stones, urinary infections, prostate disorders.",
+    lat: 11.6643,
+    lng: 78.1460,
   },
   {
     id: 11,
@@ -124,7 +140,9 @@ export const DOCTORS = [
     exp: "9 Years",
     fee: 450,
     image: doc11,
-    bio: "Expert in skin rejuvenation, pigmentation and cosmetic laser treatments."
+    bio: "Expert in skin rejuvenation, pigmentation and cosmetic laser treatments.",
+    lat: 11.0168,
+    lng: 76.9558,
   },
   {
     id: 12,
@@ -134,7 +152,9 @@ export const DOCTORS = [
     exp: "16 Years",
     fee: 700,
     image: doc12,
-    bio: "Heart specialist focusing on angiogram, heart failure and cardiac rehab."
+    bio: "Heart specialist focusing on angiogram, heart failure and cardiac rehab.",
+    lat: 8.7139,
+    lng: 77.7567,
   },
   {
     id: 13,
@@ -144,7 +164,9 @@ export const DOCTORS = [
     exp: "6 Years",
     fee: 400,
     image: doc13,
-    bio: "Eye specialist experienced in cataract, vision correction & eye infections."
+    bio: "Eye specialist experienced in cataract, vision correction & eye infections.",
+    lat: 11.3410,
+    lng: 77.7172,
   },
   {
     id: 14,
@@ -153,8 +175,10 @@ export const DOCTORS = [
     city: "Namakkal, Tamil Nadu",
     exp: "8 Years",
     fee: 350,
-    image: doc14,
-    bio: "General medicine doctor treating fever, viral infections and hypertension."
+   
+    bio: "General medicine doctor treating fever, viral infections and hypertension.",
+    lat: 11.2213,
+    lng: 78.1650,
   },
   {
     id: 15,
@@ -163,8 +187,10 @@ export const DOCTORS = [
     city: "Chennai, Tamil Nadu",
     exp: "11 Years",
     fee: 500,
-    image: doc15,
-    bio: "Women's health expert with focus on pregnancy care and fertility."
+    
+    bio: "Women's health expert with focus on pregnancy care and fertility.",
+    lat: 13.0827,
+    lng: 80.2707,
   },
   {
     id: 16,
@@ -173,7 +199,9 @@ export const DOCTORS = [
     city: "Coimbatore, Tamil Nadu",
     exp: "10 Years",
     fee: 450,
-    image: doc16,
-    bio: "Child specialist for newborn care, allergy problems & vaccinations."
-  }
+    
+    bio: "Child specialist for newborn care, allergy problems & vaccinations.",
+    lat: 11.0168,
+    lng: 76.9558,
+  },
 ];

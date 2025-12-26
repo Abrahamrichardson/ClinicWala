@@ -17,6 +17,9 @@ import AdminRoute from "./routes/AdminRoute";
 import DoctorRoute from "./routes/DoctorRoute";
 import PatientRoute from "./routes/PatientRoute";
 
+/* ADMIN LAYOUT */
+import AdminLayout from "./pages/admin/layout/AdminLayout";
+
 /* PUBLIC PAGES */
 import Home from "./pages/Home";
 import Services from "./pages/Services";
@@ -35,12 +38,13 @@ import OrderTest from "./pages/OrderTest";
 import GetMedicines from "./pages/GetMedicines";
 import RecipeDetails from "./pages/RecipeDetails";
 
-/* ADMIN */
+/* ADMIN PAGES */
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAppointments from "./pages/AdminAppointments";
 import AdminDoctors from "./pages/AdminDoctors";
 import AdminUsers from "./pages/AdminUsers";
-import UsersPage from "./pages/UsersPage";
+
+
 
 /* DOCTOR & PATIENT */
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
@@ -53,7 +57,7 @@ export default function App() {
     AOS.init({ duration: 800, easing: "ease-in-out" });
   }, []);
 
-  // Hide navbar & footer on dashboard pages
+  // Hide navbar & footer on dashboards
   const hideLayout =
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/doctor") ||
@@ -74,8 +78,6 @@ export default function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/telemedicine" element={<EClinic />} />
         <Route path="/eclinic" element={<EClinic />} />
-        <Route path="/pathology" element={<Services />} />
-        <Route path="/health-records" element={<Services />} />
 
         {/* FOOD / DIET */}
         <Route path="/food-diet" element={<FoodDiet />} />
@@ -83,7 +85,6 @@ export default function App() {
 
         {/* BOOK DOCTOR */}
         <Route path="/doctors" element={<BookDoctor />} />
-        <Route path="/book-doctor" element={<BookDoctor />} />
         <Route path="/doctor/:id" element={<DoctorDetails />} />
         <Route path="/book-appointment/:id" element={<BookAppointment />} />
         <Route path="/appointment-success" element={<AppointmentSuccess />} />
@@ -99,47 +100,18 @@ export default function App() {
         <Route path="/order-test" element={<OrderTest />} />
         <Route path="/get-medicines" element={<GetMedicines />} />
 
-        {/* ================= ADMIN ================= */}
-        <Route
-          path="/admin"
-          element={<Navigate to="/admin/dashboard" replace />}
-        />
-
-        <Route
-          path="/admin/dashboard"
-          element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/appointments"
-          element={
-            <AdminRoute>
-              <AdminAppointments />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/doctors"
-          element={
-            <AdminRoute>
-              <AdminDoctors />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/users"
-          element={
-            <AdminRoute>
-              <AdminUsers />
-            </AdminRoute>
-          }
-        />
+        {/* ================= ADMIN (FIXED) ================= */}
+        <Route path="/admin" element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="doctors" element={<AdminDoctors />} />
+            <Route path="appointments" element={<AdminAppointments />} />
+            <Route path="users" element={<AdminUsers />} />
+            
+          
+          </Route>
+        </Route>
 
         {/* ================= DOCTOR ================= */}
         <Route

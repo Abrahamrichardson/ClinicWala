@@ -5,6 +5,8 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/clinicwala.css";
 import './i18n';
+import "leaflet/dist/leaflet.css";
+
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(

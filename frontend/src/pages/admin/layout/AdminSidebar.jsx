@@ -10,8 +10,9 @@ export default function AdminSidebar() {
       </div>
 
       <nav className="nav nav-pills flex-column p-2 gap-1 mt-2">
+
         <NavLink
-          to="/admin"
+          to="/admin/dashboard"
           className={({ isActive }) =>
             "nav-link text-start text-white " +
             (isActive ? "bg-primary" : "bg-transparent")
@@ -21,7 +22,7 @@ export default function AdminSidebar() {
         </NavLink>
 
         <NavLink
-          to="/admin/add-doctor"
+          to="/admin/doctors"
           className={({ isActive }) =>
             "nav-link text-start text-white " +
             (isActive ? "bg-primary" : "bg-transparent")
@@ -49,6 +50,7 @@ export default function AdminSidebar() {
         >
           Analytics
         </NavLink>
+
       </nav>
 
       <div className="mt-auto p-3 small text-muted">

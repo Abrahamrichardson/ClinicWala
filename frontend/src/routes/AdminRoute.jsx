@@ -1,7 +1,7 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const AdminRoute = ({ children }) => {
+const AdminRoute = () => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const location = useLocation();
@@ -16,8 +16,8 @@ const AdminRoute = ({ children }) => {
     return <Navigate to="/" replace />;
   }
 
-  // ✅ Admin allowed
-  return children;
+  // ✅ Admin allowed → render admin pages
+  return <Outlet />;
 };
 
 export default AdminRoute;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AdminLayout from "./layout/AdminLayout";
 import { createDoctor } from "../../api/adminApi";
 
 export default function AdminAddDoctor() {
@@ -9,7 +8,11 @@ export default function AdminAddDoctor() {
     phone: "",
     password: "",
     specialization: "",
+    experience: "",
+    fees: "",
+    city: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -19,16 +22,20 @@ export default function AdminAddDoctor() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      setLoading(true);
       await createDoctor(form);
-      alert("Doctor added successfully!");
+      alert("Doctor added successfully");
+
       setForm({
         name: "",
         email: "",
         phone: "",
         password: "",
         specialization: "",
+        experience: "",
+        fees: "",
+        city: "",
       });
     } catch (err) {
       alert(err.response?.data?.message || "Failed to add doctor");
@@ -38,13 +45,13 @@ export default function AdminAddDoctor() {
   };
 
   return (
-    <AdminLayout>
+    <div>
       <h2 className="mb-4">Add New Doctor</h2>
 
       <div className="clinic-card">
         <form onSubmit={handleSubmit} className="row g-3">
           <div className="col-md-6">
-            <label className="form-label">Name</label>
+            <label className="form-label">Doctor Name</label>
             <input
               name="name"
               className="form-control"
@@ -59,7 +66,6 @@ export default function AdminAddDoctor() {
             <input
               name="specialization"
               className="form-control"
-              placeholder="Cardiologist, Dermatologist..."
               value={form.specialization}
               onChange={handleChange}
               required
@@ -100,6 +106,37 @@ export default function AdminAddDoctor() {
             />
           </div>
 
+          <div className="col-md-4">
+            <label className="form-label">Experience</label>
+            <input
+              name="experience"
+              className="form-control"
+              value={form.experience}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="col-md-4">
+            <label className="form-label">Fees</label>
+            <input
+              name="fees"
+              type="number"
+              className="form-control"
+              value={form.fees}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="col-md-4">
+            <label className="form-label">City</label>
+            <input
+              name="city"
+              className="form-control"
+              value={form.city}
+              onChange={handleChange}
+            />
+          </div>
+
           <div className="col-12 mt-3">
             <button className="btn btn-primary" disabled={loading}>
               {loading ? "Saving..." : "Add Doctor"}
@@ -107,6 +144,6 @@ export default function AdminAddDoctor() {
           </div>
         </form>
       </div>
-    </AdminLayout>
+    </div>
   );
 }
