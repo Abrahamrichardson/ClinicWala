@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table, Button, Form } from "react-bootstrap";
-import axiosClient from "../api/axiosClient";
+import {
+  getAdminDoctors,
+  createDoctor,
+  deleteDoctor,
+} from "../api/adminApi";
 
 export default function AdminDoctors() {
   const [doctors, setDoctors] = useState([]);
@@ -13,18 +17,11 @@ export default function AdminDoctors() {
     image: "",
   });
 
-  // -----------------------------
-  // Fetch Doctors
-  // -----------------------------
+  // ================= FETCH DOCTORS =================
   const fetchDoctors = async () => {
     try {
-      const res = await axiosClient.get("/doctors");
-
-      const list = Array.isArray(res.data)
-        ? res.data
-        : res.data.doctors || [];
-
-      setDoctors(list);
+      const res = await getAdminDoctors();
+      setDoctors(res.data.doctors || []);
     } catch (err) {
       console.error("FETCH DOCTORS ERROR:", err);
       setDoctors([]);
@@ -35,21 +32,17 @@ export default function AdminDoctors() {
     fetchDoctors();
   }, []);
 
-  // -----------------------------
-  // Handle Form Change
-  // -----------------------------
+  // ================= HANDLE FORM =================
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // -----------------------------
-  // Save Doctor
-  // -----------------------------
+  // ================= SAVE DOCTOR =================
   const saveDoctor = async (e) => {
     e.preventDefault();
 
     try {
-      await axiosClient.post("/doctors", form);
+      await createDoctor(form);
 
       setForm({
         name: "",
@@ -66,6 +59,18 @@ export default function AdminDoctors() {
     }
   };
 
+  // ================= DELETE DOCTOR =================
+  const removeDoctor = async (id) => {
+    if (!window.confirm("Delete this doctor?")) return;
+
+    try {
+      await deleteDoctor(id);
+      fetchDoctors();
+    } catch (err) {
+      console.error("DELETE DOCTOR ERROR:", err);
+    }
+  };
+
   return (
     <div className="container py-4">
       <h3 className="fw-bold text-primary mb-3">
@@ -78,7 +83,6 @@ export default function AdminDoctors() {
 
         <Form onSubmit={saveDoctor}>
           <div className="row">
-
             <div className="col-md-4">
               <Form.Group className="mb-2">
                 <Form.Label>Name</Form.Label>
@@ -114,11 +118,9 @@ export default function AdminDoctors() {
                 />
               </Form.Group>
             </div>
-
           </div>
 
           <div className="row">
-
             <div className="col-md-4">
               <Form.Group className="mb-2">
                 <Form.Label>Experience (Years)</Form.Label>
@@ -153,7 +155,6 @@ export default function AdminDoctors() {
                 />
               </Form.Group>
             </div>
-
           </div>
 
           <Button type="submit" className="mt-3">
@@ -175,6 +176,7 @@ export default function AdminDoctors() {
               <th>City</th>
               <th>Experience</th>
               <th>Fee</th>
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -187,6 +189,15 @@ export default function AdminDoctors() {
                 <td>{d.city}</td>
                 <td>{d.experience}</td>
                 <td>₹{d.fees}</td>
+                <td>
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    onClick={() => removeDoctor(d._id)}
+                  >
+                    Delete
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>

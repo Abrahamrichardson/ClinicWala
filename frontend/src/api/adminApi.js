@@ -1,45 +1,53 @@
 import axiosClient from "./axiosClient";
 
-// ===============================
-// DASHBOARD
-// ===============================
-export const getAdminDashboard = () => {
-  return axiosClient.get("/admin/dashboard");
+// ================= ADMIN DASHBOARD =================
+export const getAdminStats = async () => {
+  const res = await axiosClient.get("/admin/dashboard");
+  return res.data;
 };
 
-// ===============================
-// USERS (PATIENTS)
-// ===============================
-export const getUsers = () => {
-  return axiosClient.get("/users");
-};
+// ================= USERS =================
+export const getUsers = () => axiosClient.get("/users");
+export const deleteUser = (id) => axiosClient.delete(`/users/${id}`);
+export const updateUser = (id, data) =>
+  axiosClient.put(`/users/${id}`, data);
 
-export const deleteUser = (id) => {
-  return axiosClient.delete(`/users/${id}`);
-};
+// ================= DOCTORS =================
+export const createDoctor = (data) =>
+  axiosClient.post("/admin/doctors", data);
 
-export const updateUser = (id, data) => {
-  return axiosClient.put(`/users/${id}`, data);
-};
+export const getAdminDoctors = () =>
+  axiosClient.get("/admin/doctors");
 
-// ===============================
-// DOCTORS (ADMIN)
-// ===============================
-export const createDoctor = (data) => {
-  return axiosClient.post("/admin/doctors", data);
-};
+export const deleteDoctor = (id) =>
+  axiosClient.delete(`/admin/doctors/${id}`);
 
-export const getAdminDoctors = () => {
-  return axiosClient.get("/admin/doctors");
-};
+// ================= CATEGORIES =================
+export const getCategories = () =>
+  axiosClient.get("/admin/categories");
 
-export const deleteDoctor = (id) => {
-  return axiosClient.delete(`/admin/doctors/${id}`);
-};
+export const createCategory = (data) =>
+  axiosClient.post("/admin/categories", data);
 
-// ===============================
-// APPOINTMENTS
-// ===============================
-export const getAppointments = () => {
-  return axiosClient.get("/appointments");
-};
+export const deleteCategory = (id) =>
+  axiosClient.delete(`/admin/categories/${id}`);
+
+// ================= SUBCATEGORIES =================
+export const getSubcategories = () =>
+  axiosClient.get("/admin/subcategories");
+
+export const createSubcategory = (data) =>
+  axiosClient.post("/admin/subcategories", data);
+
+export const deleteSubcategory = (id) =>
+  axiosClient.delete(`/admin/subcategories/${id}`);
+
+// ================= COURSES =================
+export const getCourses = () =>
+  axiosClient.get("/admin/courses");
+
+export const createCourse = (data) =>
+  axiosClient.post("/admin/courses", data);
+
+export const deleteCourse = (id) =>
+  axiosClient.delete(`/admin/courses/${id}`);

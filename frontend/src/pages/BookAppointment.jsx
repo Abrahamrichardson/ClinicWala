@@ -45,44 +45,43 @@ export default function BookAppointment() {
 
   // Submit booking
   const submitBooking = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!token) {
-      alert("Please login before booking");
-      navigate("/login");
-      return;
-    }
+  if (!token) {
+    alert("Please login before booking");
+    navigate("/login");
+    return;
+  }
 
-    if (!form.date || !form.time) {
-      alert("Please select date & time");
-      return;
-    }
+  if (!form.date || !form.time) {
+    alert("Please select date & time");
+    return;
+  }
 
-    try {
-      setSubmitting(true);
+  try {
+    setSubmitting(true);
 
-      await axiosClient.post("/appointments", {
-        patientId,
-        doctorId: String(doctor.id),
-        doctorName: doctor.name,
-        specialization: doctor.spec,
-        doctorCity: doctor.city,
-        fee: doctor.fee,
-        date: form.date,
-        time: form.time,
-        reason: form.reason,
-      });
+    await axiosClient.post("/appointments", {
+      doctorId: doctor._id,          // ✅ MongoDB ObjectId
+      doctorName: doctor.name,
+      specialization: doctor.spec,
+      doctorCity: doctor.city,
+      fee: doctor.fee,
+      date: form.date,
+      time: form.time,
+      reason: form.reason,
+    });
 
-      alert("✅ Appointment booked successfully");
-      navigate("/patient/dashboard");
+    alert("✅ Appointment booked successfully");
+    navigate("/patient/dashboard");
 
-    } catch (err) {
-      console.error("BOOKING ERROR:", err);
-      alert("❌ Failed to book appointment");
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  } catch (err) {
+    console.error("BOOKING ERROR:", err.response?.data || err);
+    alert("❌ Failed to book appointment");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   // ✅ UI
 return (

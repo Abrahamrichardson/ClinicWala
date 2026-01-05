@@ -1,35 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axiosClient from "../../api/axiosClient";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function PatientDashboard() {
   const [appointments, setAppointments] = useState([]);
   const navigate = useNavigate();
 
-  const patientId = localStorage.getItem("userId");
-
   useEffect(() => {
-    if (!patientId) return;
+    loadAppointments();
+  }, []);
 
-    axiosClient
-      .get(`/appointments/patient/${patientId}`)
-      .then((res) => {
-        setAppointments(res.data.appointments || []);
-      })
-      .catch((err) => {
-        console.error("PATIENT APPOINTMENTS ERROR:", err);
-      });
-  }, [patientId]);
+  const loadAppointments = async () => {
+    try {
+      const res = await axiosClient.get("/appointments/patient/my");
+      setAppointments(res.data || []);
+    } catch (err) {
+      console.error("PATIENT APPOINTMENTS ERROR:", err);
+    }
+  };
 
   return (
     <div className="container mt-4">
       <h3>🧑 Patient Dashboard</h3>
 
-      <Button
-        className="mb-3"
-        onClick={() => navigate("/doctors")}
-      >
+      <Button className="mb-3" onClick={() => navigate("/doctors")}>
         + Book Appointment
       </Button>
 
@@ -56,23 +51,32 @@ export default function PatientDashboard() {
 
           {appointments.map((a) => (
             <tr key={a._id}>
-              <td>{a.doctorName}</td>
-              <td>{a.specialization}</td>
-              <td>{a.doctorCity}</td>
+              <td>{a.doctorName || "—"}</td>
+              <td>{a.specialization || "—"}</td>
+              <td>{a.doctorCity || "—"}</td>
               <td>{a.date}</td>
               <td>{a.time}</td>
-              <td>{a.status}</td>
+              <td>
+                <Badge
+                  bg={
+                    a.status === "pending"
+                      ? "warning"
+                      : a.status === "confirmed"
+                      ? "success"
+                      : "secondary"
+                  }
+                >
+                  {a.status}
+                </Badge>
+              </td>
             </tr>
           ))}
         </tbody>
       </Table>
-      <Button
-  variant="outline-primary"
-  onClick={() => navigate("/login")}
->
-  Back to login
-</Button>
 
+      <Button variant="outline-primary" onClick={() => navigate("/login")}>
+        Back to login
+      </Button>
     </div>
   );
 }

@@ -1,13 +1,12 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:5000/api", // ✅ IMPORTANT
+  baseURL: "http://localhost:5000/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Auto add JWT token
 axiosClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");

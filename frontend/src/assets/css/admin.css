@@ -1,0 +1,206 @@
+/* ================= ADMIN LAYOUT ================= */
+.admin-layout {
+  background-color: #0f172a;
+  min-height: 100vh;
+  color: #e5e7eb;
+}
+
+.admin-content {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* ================= SIDEBAR ================= */
+.admin-sidebar {
+  width: 250px;
+  background: #020617;
+  border-right: 1px solid #1e293b;
+}
+
+.admin-sidebar .nav-link {
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: white;
+}
+
+.admin-sidebar .nav-link:hover {
+  background-color: #1e293b;
+}
+
+.admin-sidebar .nav-link.bg-primary {
+  background: linear-gradient(90deg, #2563eb, #1d4ed8);
+}
+
+/* ================= CARDS ================= */
+.clinic-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h6 {
+  font-size: 13px;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.stat-card h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ================= TABLE ================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+}
+
+table thead {
+  background-color: #f1f5f9;
+}
+
+table th {
+  padding: 12px;
+  font-size: 13px;
+  color: #334155;
+}
+
+table td {
+  padding: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ================= FORMS ================= */
+.form-row,
+.form-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.form-row input,
+.form-row select,
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+}
+
+/* ================= BUTTONS ================= */
+button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+button.danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+/* ================= PAGINATION ================= */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+/* ================= COLOURFUL ADMIN ANALYTICS ================= */
+
+/* Dashboard Title */
+.admin-content h2 {
+  font-weight: 800;
+  color: #020617;
+  background: linear-gradient(90deg, #2563eb, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================= STAT CARDS ================= */
+.stat-card {
+  border-radius: 18px;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+/* Different colors for each card */
+.stat-card:nth-child(1) {
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+}
+
+.stat-card:nth-child(2) {
+  background: linear-gradient(135deg, #16a34a, #4ade80);
+}
+
+.stat-card:nth-child(3) {
+  background: linear-gradient(135deg, #f97316, #fdba74);
+}
+
+.stat-card:nth-child(4) {
+  background: linear-gradient(135deg, #9333ea, #c084fc);
+}
+
+.stat-card h6 {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.stat-card h3 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+}
+
+/* ================= CHART CARDS ================= */
+.clinic-card {
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  padding: 22px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.clinic-card h5 {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Chart canvas */
+.clinic-card canvas {
+  max-height: 300px !important;
+}
+
+/* ================= EMPTY MESSAGE ================= */
+.text-muted {
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .stat-card h3 {
+    font-size: 22px;
+  }
+
+  .clinic-card {
+    padding: 18px;
+  }
+}

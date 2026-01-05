@@ -2,58 +2,71 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 export default function AdminSidebar() {
+  const linkClass = ({ isActive }) =>
+    `nav-link text-start ${
+      isActive ? "bg-primary text-white" : "text-white"
+    }`;
+
   return (
-    <div className="d-flex flex-column text-white min-vh-100">
+    <div className="admin-sidebar d-flex flex-column min-vh-100 text-white">
+
+      {/* HEADER */}
       <div className="p-3 border-bottom border-secondary">
         <h4 className="mb-0">ClinicWala</h4>
         <small className="text-muted">Admin Panel</small>
       </div>
 
+      {/* NAV */}
       <nav className="nav nav-pills flex-column p-2 gap-1 mt-2">
 
-        <NavLink
-          to="/admin/dashboard"
-          className={({ isActive }) =>
-            "nav-link text-start text-white " +
-            (isActive ? "bg-primary" : "bg-transparent")
-          }
-        >
+        {/* DASHBOARD */}
+        <NavLink to="/admin/dashboard" className={linkClass}>
           Dashboard
         </NavLink>
 
-        <NavLink
-          to="/admin/doctors"
-          className={({ isActive }) =>
-            "nav-link text-start text-white " +
-            (isActive ? "bg-primary" : "bg-transparent")
-          }
-        >
-          Add Doctor
+        {/* USER MANAGEMENT */}
+        <NavLink to="/admin/users" className={linkClass}>
+          Users
         </NavLink>
 
-        <NavLink
-          to="/admin/appointments"
-          className={({ isActive }) =>
-            "nav-link text-start text-white " +
-            (isActive ? "bg-primary" : "bg-transparent")
-          }
-        >
+        <NavLink to="/admin/doctors" className={linkClass}>
+          Doctors
+        </NavLink>
+
+        <NavLink to="/admin/appointments" className={linkClass}>
           Appointments
         </NavLink>
 
-        <NavLink
-          to="/admin/analytics"
-          className={({ isActive }) =>
-            "nav-link text-start text-white " +
-            (isActive ? "bg-primary" : "bg-transparent")
-          }
-        >
-          Analytics
+        {/* CATALOG */}
+        <div className="text-uppercase small text-muted mt-3 px-2">
+          Catalog
+        </div>
+
+        <NavLink to="/admin/catalog/categories" className={linkClass}>
+          Categories
+        </NavLink>
+
+        <NavLink to="/admin/catalog/subcategories" className={linkClass}>
+          Subcategories
+        </NavLink>
+
+        <NavLink to="/admin/catalog/courses" className={linkClass}>
+          Courses
+        </NavLink>
+
+        {/* SETTINGS */}
+        <div className="text-uppercase small text-muted mt-3 px-2">
+          Settings
+        </div>
+
+        <NavLink to="/admin/settings" className={linkClass}>
+          Settings
         </NavLink>
 
       </nav>
 
-      <div className="mt-auto p-3 small text-muted">
+      {/* FOOTER */}
+      <div className="mt-auto p-3 small text-muted text-center">
         © {new Date().getFullYear()} ClinicWala
       </div>
     </div>

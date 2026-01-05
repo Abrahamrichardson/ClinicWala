@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema({
-  // 🔥 ADD THIS
   patientId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
 
+  // ✅ FIXED: Doctor is also a User
   doctorId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 
@@ -43,11 +44,14 @@ const appointmentSchema = new mongoose.Schema({
     required: true,
   },
 
-  reason: String,
+  reason: {
+    type: String,
+  },
 
   status: {
     type: String,
-    default: "Pending",
+    enum: ["pending", "confirmed", "cancelled", "completed"],
+    default: "pending",
   },
 
   createdAt: {

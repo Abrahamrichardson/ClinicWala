@@ -2,21 +2,28 @@ import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const AdminRoute = () => {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
   const location = useLocation();
 
-  // 🔐 Not logged in → login page
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role")?.toLowerCase(); // normalize
+
+  // 🔐 Not logged in → redirect to login
   if (!token) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return (
+      <Navigate
+        to="/login"
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
-  // ❌ Logged in but not admin → home
+  // ❌ Logged in but not admin → redirect to home
   if (role !== "admin") {
     return <Navigate to="/" replace />;
   }
 
-  // ✅ Admin allowed → render admin pages
+  // ✅ Admin authenticated → allow access
   return <Outlet />;
 };
 
