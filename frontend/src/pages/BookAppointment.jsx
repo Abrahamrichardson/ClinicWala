@@ -10,7 +10,7 @@ export default function BookAppointment() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-  const patientId = localStorage.getItem("userId");
+  
 
   // FIND doctor from frontend data
   const doctor = DOCTORS.find((d) => String(d.id) === String(id));
@@ -43,8 +43,9 @@ export default function BookAppointment() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Submit booking
-  const submitBooking = async (e) => {
+
+  // submitting 
+const submitBooking = async (e) => {
   e.preventDefault();
 
   if (!token) {
@@ -58,19 +59,23 @@ export default function BookAppointment() {
     return;
   }
 
+  const doctorMongoId = doctor.doctorId; // ✅ FIXED
+
+  if (!doctorMongoId) {
+    alert("Doctor ID missing");
+    return;
+  }
+
   try {
     setSubmitting(true);
 
-    await axiosClient.post("/appointments", {
-      doctorId: doctor._id,          // ✅ MongoDB ObjectId
-      doctorName: doctor.name,
-      specialization: doctor.spec,
-      doctorCity: doctor.city,
-      fee: doctor.fee,
-      date: form.date,
-      time: form.time,
-      reason: form.reason,
-    });
+   await axiosClient.post("/appointments", {
+  doctorId: doctor.doctorId, // "1"
+  date: form.date,
+  time: form.time,
+  reason: form.reason,
+});
+
 
     alert("✅ Appointment booked successfully");
     navigate("/patient/dashboard");
@@ -82,6 +87,7 @@ export default function BookAppointment() {
     setSubmitting(false);
   }
 };
+
 
   // ✅ UI
 return (

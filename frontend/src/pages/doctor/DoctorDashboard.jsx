@@ -10,6 +10,9 @@ export default function DoctorDashboard() {
     loadAppointments();
   }, []);
 
+  // ===============================
+  // LOAD APPOINTMENTS
+  // ===============================
   const loadAppointments = async () => {
     try {
       const res = await axiosClient.get("/appointments/doctor/my");
@@ -21,12 +24,39 @@ export default function DoctorDashboard() {
     }
   };
 
+  // ===============================
+  // APPROVE APPOINTMENT
+  // ===============================
+  const approveAppointment = async (id) => {
+    try {
+      await axiosClient.put(`/appointments/${id}/approve`);
+      loadAppointments();
+    } catch (err) {
+      alert("Failed to approve appointment");
+    }
+  };
+
+  // ===============================
+  // REJECT APPOINTMENT
+  // ===============================
+  const rejectAppointment = async (id) => {
+    try {
+      await axiosClient.put(`/appointments/${id}/reject`);
+      loadAppointments();
+    } catch (err) {
+      alert("Failed to reject appointment");
+    }
+  };
+
+  // ===============================
+  // MARK COMPLETED
+  // ===============================
   const markCompleted = async (id) => {
     try {
       await axiosClient.put(`/appointments/${id}/complete`);
       loadAppointments();
     } catch (err) {
-      alert("Failed to update status");
+      alert("Failed to mark completed");
     }
   };
 
@@ -65,21 +95,48 @@ export default function DoctorDashboard() {
               <td>{a.date}</td>
               <td>{a.time}</td>
               <td>{a.reason || "-"}</td>
+
+              {/* ================= STATUS BADGE ================= */}
               <td>
                 <Badge
                   bg={
                     a.status === "completed"
                       ? "success"
-                      : a.status === "confirmed"
+                      : a.status === "approved"
                       ? "primary"
+                      : a.status === "rejected"
+                      ? "danger"
                       : "warning"
                   }
                 >
                   {a.status}
                 </Badge>
               </td>
+
+              {/* ================= ACTION BUTTONS ================= */}
               <td>
-                {a.status !== "completed" && (
+                {a.status === "pending" && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="success"
+                      className="me-2"
+                      onClick={() => approveAppointment(a._id)}
+                    >
+                      Approve
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      onClick={() => rejectAppointment(a._id)}
+                    >
+                      Reject
+                    </Button>
+                  </>
+                )}
+
+                {a.status === "approved" && (
                   <Button
                     size="sm"
                     variant="secondary"

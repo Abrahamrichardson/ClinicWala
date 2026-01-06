@@ -1,7 +1,7 @@
 const express = require("express");
 const Doctor = require("../models/Doctor");
 const router = express.Router();
-const protect = require("./protect");
+const protect = require("../middleware/protect");
 
 // ================= GET ALL DOCTORS =================
 // GET /api/doctors
@@ -18,15 +18,32 @@ router.get("/", async (req, res) => {
 // GET /api/doctors/custom/1
 router.get("/custom/:id", async (req, res) => {
   try {
-    const doctor = await Doctor.findOne({ id: req.params.id }).exec();
+    const doctor = await Doctor.findOne({ id: req.params.id });
 
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
 
-    res.json({ doctors });
+    // ✅ FIXED
+    res.json(doctor);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= GET SINGLE DOCTOR BY MONGODB _id =================
+// GET /api/doctors/:id
+router.get("/:id", async (req, res) => {
+  try {
+    const doctor = await Doctor.findById(req.params.id);
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    res.json(doctor);
+  } catch (err) {
+    res.status(500).json({ message: "Invalid doctor ID" });
   }
 });
 

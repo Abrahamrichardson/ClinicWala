@@ -51,19 +51,21 @@ export default function PatientDashboard() {
 
           {appointments.map((a) => (
             <tr key={a._id}>
-              <td>{a.doctorName || "—"}</td>
-              <td>{a.specialization || "—"}</td>
-              <td>{a.doctorCity || "—"}</td>
+              <td>{a.doctorId?.name || "—"}</td>
+              <td>{a.doctorId?.specialization || "—"}</td>
+              <td>{a.doctorId?.city || "—"}</td>
               <td>{a.date}</td>
               <td>{a.time}</td>
               <td>
                 <Badge
                   bg={
-                    a.status === "pending"
-                      ? "warning"
-                      : a.status === "confirmed"
+                    a.status === "completed"
                       ? "success"
-                      : "secondary"
+                      : a.status === "approved"
+                      ? "primary"
+                      : a.status === "rejected"
+                      ? "danger"
+                      : "warning"
                   }
                 >
                   {a.status}
