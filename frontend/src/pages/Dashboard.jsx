@@ -1,25 +1,3 @@
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
-
-// export default function Dashboard() {
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     navigate("/login");
-//   };
-
-//   return (
-//     <div style={{ padding: "40px" }}>
-//       <h1>Welcome to Clinicwala Dashboard 🩺</h1>
-//       <p>You are successfully logged in.</p>
-
-//       <button onClick={handleLogout} style={{ marginTop: "20px" }}>
-//         Logout
-//       </button>
-//     </div>
-//   );
-// }
 
 
 
@@ -66,7 +44,7 @@ export default function Dashboard() {
     try {
       const res = await axiosClient.get("/appointments/my");
       setAppointments(res.data);
-    } catch (err) {
+    } catch  {
       console.log("Failed to load patient appointments");
     }
   };

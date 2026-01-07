@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosClient from "../api/axiosClient";
-import { AuthContext } from "../context/AuthContext";
+import axiosClient from "../../api/axiosClient";
+import { AuthContext } from "../../context/AuthContext";
 import "./Login.css";
-import me1 from "../assets/doctor-login-thumb.jpg";
+import me1 from "../../assets/doctor-login-thumb.jpg";
 
 function Login() {
   const navigate = useNavigate();
@@ -27,23 +27,29 @@ function Login() {
         password,
       });
 
-      const { token, role, userId, doctorId } = res.data;
+      const { token, role, userId } = res.data;
+
+      // ❌ BLOCK doctor & admin here
+      if (role === "admin" || role === "doctor") {
+        alert("Doctors & Admin must login from dashboard login");
+        navigate("/login/dashboard");
+        return;
+      }
+
+      // ✅ ONLY patient allowed
+      if (role !== "patient") {
+        alert("Unauthorized access");
+        return;
+      }
 
       // ✅ SAVE AUTH DATA
       login(token);
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
       localStorage.setItem("userId", userId || "");
-      localStorage.setItem("doctorId", doctorId || "");
 
-      // ✅ ROLE BASED REDIRECT
-      if (role === "admin") {
-        navigate("/admin/dashboard");
-      } else if (role === "doctor") {
-        navigate("/doctor/dashboard");
-      } else {
-        navigate("/patient/dashboard");
-      }
+      // ✅ PATIENT DASHBOARD
+      navigate("/patient/dashboard");
 
     } catch (err) {
       console.error("LOGIN ERROR:", err);
@@ -78,12 +84,12 @@ function Login() {
       {/* Login Section */}
       <div className="login-container">
         <div className="doctor-image">
-          <img src={me1} alt="Doctor" />
+          <img src={me1} alt="Login" />
         </div>
 
         <div className="login-boxes">
           <div className="login-form">
-            <h4>LOGIN</h4>
+            <h4>PATIENT LOGIN</h4>
 
             <label>E-Mail</label>
             <input
@@ -120,17 +126,24 @@ function Login() {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate("/register"); // Patient register
+                  navigate("/register");
                 }}
               >
                 New User?
               </a>
             </div>
 
-            {/* OPTIONAL HELPER */}
+            {/* Helper */}
             <div className="text-muted mt-2" style={{ fontSize: "13px" }}>
-              Doctors & Admin use the same login form
+              Doctor & Admin?{" "}
+              <span
+                style={{ color: "#0d6efd", cursor: "pointer" }}
+                onClick={() => navigate("/login/dashboard")}
+              >
+                Login here
+              </span>
             </div>
+
           </div>
         </div>
       </div>

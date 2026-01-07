@@ -4,7 +4,7 @@ const appointmentSchema = new mongoose.Schema(
   {
     doctorId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",           // doctor is a user
+      ref: "User",
       required: true,
     },
 
@@ -14,10 +14,28 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
 
-    doctorName: String,
-    specialization: String,
-    doctorCity: String,
-    fee: Number,
+    doctorName: {
+      type: String,
+      required: true,
+    },
+
+    specialization: {
+      type: String,
+      required: true,
+    },
+
+    doctorCity: {
+      type: String,
+      required: true,
+    },
+
+    // 🔥 MOST IMPORTANT FIX
+    fee: {
+      type: Number,
+      required: true,     // ❌ missing earlier
+      default: 0,         // safety
+      min: 0,
+    },
 
     date: {
       type: String,
@@ -29,14 +47,16 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
 
-    reason: String,
+    reason: {
+      type: String,
+      default: "",
+    },
 
     status: {
-  type: String,
-  enum: ["pending", "approved", "rejected", "completed"], // ✅ FIXED
-  default: "pending",
-}
-
+      type: String,
+      enum: ["pending", "approved", "rejected", "completed"],
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

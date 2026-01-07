@@ -1,5 +1,3 @@
-
-
 import axios from "axios";
 
 const API = axios.create({
@@ -7,10 +5,10 @@ const API = axios.create({
   withCredentials: true,
 });
 
-// Doctor — Get my appointments (correct backend route)
+// ✅ Doctor — Get my appointments
 export const getDoctorAppointments = () =>
   API.get("/appointments/doctor/my");
 
-// Doctor — Update appointment status (correct backend route)
+// ✅ Doctor — Update appointment status
 export const updateAppointmentStatus = (id, status) =>
-  API.patch(`/appointments/${id}/status`, { status });
+  API.put(`/appointments/${id}/status`, { status });

@@ -95,4 +95,45 @@ router.delete("/custom/:id", protect, async (req, res) => {
   res.json({ success: true });
 });
 
+
+
+// ✅ DOCTOR SUMMARY
+router.get("/summary", protect, async (req, res) => {
+  try {
+    const doctorId = req.user._id;
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const totalPatients = await Appointment.distinct("patientId", {
+      doctorId,
+    });
+
+    const todayAppointments = await Appointment.countDocuments({
+      doctorId,
+      date: today,
+    });
+
+    const pendingAppointments = await Appointment.countDocuments({
+      doctorId,
+      status: "pending",
+    });
+
+    const completedConsultations = await Appointment.countDocuments({
+      doctorId,
+      status: "completed",
+    });
+
+    res.json({
+      totalPatients: totalPatients.length,
+      todayAppointments,
+      pendingAppointments,
+      completedConsultations,
+    });
+  } catch (err) {
+    console.error("SUMMARY ERROR:", err);
+    res.status(500).json({ message: "Failed to load summary" });
+  }
+});
+
+
 module.exports = router;

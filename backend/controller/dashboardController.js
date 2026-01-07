@@ -11,14 +11,20 @@ exports.getDashboardStats = async (req, res) => {
     /* ================= TOTAL REVENUE ================= */
     const revenueAgg = await Appointment.aggregate([
       {
+        $match: {
+          status: "completed",     // ✅ VERY IMPORTANT
+          fee: { $gt: 0 }          // ✅ ensure valid fee
+        }
+      },
+      {
         $group: {
           _id: null,
-          total: { $sum: "$fee" },
-        },
-      },
+          total: { $sum: "$fee" }
+        }
+      }
     ]);
 
-    const totalRevenue = revenueAgg[0]?.total || 0;
+    const totalRevenue = revenueAgg.length > 0 ? revenueAgg[0].total : 0;
 
     /* ================= MONTHLY APPOINTMENTS ================= */
     const monthlyAppointments = await Appointment.aggregate([

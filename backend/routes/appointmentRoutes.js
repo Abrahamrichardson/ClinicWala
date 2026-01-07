@@ -31,16 +31,7 @@ router.post("/", protect, async (req, res) => {
       return res.status(403).json({ message: "Patients only" });
     }
 
-    const {
-      doctorId,       // frontend doctor id (string / number)
-      doctorName,
-      specialization,
-      doctorCity,
-      fee,
-      date,
-      time,
-      reason,
-    } = req.body;
+    const { doctorId, date, time, reason } = req.body;
 
     if (!doctorId || !date || !time) {
       return res.status(400).json({
@@ -48,7 +39,7 @@ router.post("/", protect, async (req, res) => {
       });
     }
 
-    // 🔑 FIND REAL DOCTOR USER
+    // 🔑 FIND REAL DOCTOR USER (by frontend doctorId)
     const doctorUser = await User.findOne({
       doctorId: String(doctorId),
       role: "doctor",
@@ -58,18 +49,20 @@ router.post("/", protect, async (req, res) => {
       return res.status(404).json({ message: "Doctor not found" });
     }
 
-    // 🔑 SAVE APPOINTMENT
+    // 🔑 SAVE APPOINTMENT WITH DB VALUES
     const appointment = new Appointment({
-      doctorId: doctorUser._id,   // ✅ MongoDB ObjectId
+      doctorId: doctorUser._id,      // Mongo ObjectId
       patientId: req.user._id,
-      doctorName,
-      specialization,
-      doctorCity,
-      fee,
+
+      doctorName: doctorUser.name,
+      specialization: doctorUser.specialization,
+      doctorCity: doctorUser.city,
+      fee: doctorUser.fees,
+
       date,
       time,
       reason,
-      status: "pending",          // ⭐ DEFAULT
+      status: "pending",
     });
 
     await appointment.save();

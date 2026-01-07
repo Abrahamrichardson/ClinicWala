@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table, Button, Badge, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../api/axiosClient";
 import "./AdminAppointments.css";
-
 
 export default function AdminAppointments() {
   const navigate = useNavigate();
@@ -12,17 +12,22 @@ export default function AdminAppointments() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   // -----------------------------
-  // Load Appointments (FRONTEND)
+  // Load Appointments (ADMIN VIEW)
   // -----------------------------
-  const loadAppointments = () => {
-    const list =
-      JSON.parse(localStorage.getItem("appointments")) || [];
-    setAppointments(list);
-    setLoading(false);
+  const loadAppointments = async () => {
+    try {
+      const res = await axiosClient.get("/appointments");
+      setAppointments(res.data);
+    } catch (err) {
+      console.error("LOAD APPOINTMENTS ERROR:", err);
+      alert("Failed to load appointments");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // -----------------------------
-  // Admin Check + Load
+  // Admin Check
   // -----------------------------
   useEffect(() => {
     const role = localStorage.getItem("role");
@@ -37,27 +42,19 @@ export default function AdminAppointments() {
   }, []);
 
   // -----------------------------
-  // Cancel Appointment
+  // Cancel Appointment (ADMIN)
   // -----------------------------
-  const handleCancel = (id) => {
+  const handleCancel = async (id) => {
     if (!window.confirm("Are you sure you want to cancel this appointment?"))
       return;
 
-    const updated = appointments.filter((a) => a.id !== id);
-    localStorage.setItem("appointments", JSON.stringify(updated));
-    setAppointments(updated);
-  };
-
-  // -----------------------------
-  // Approve Appointment
-  // -----------------------------
-  const handleApprove = (id) => {
-    const updated = appointments.map((a) =>
-      a.id === id ? { ...a, status: "Approved" } : a
-    );
-
-    localStorage.setItem("appointments", JSON.stringify(updated));
-    setAppointments(updated);
+    try {
+      await axiosClient.delete(`/appointments/${id}`);
+      loadAppointments();
+    } catch (err) {
+      console.error("CANCEL ERROR:", err);
+      alert("Failed to cancel appointment");
+    }
   };
 
   // -----------------------------
@@ -126,12 +123,12 @@ export default function AdminAppointments() {
 
               <tbody>
                 {appointments.map((a, index) => (
-                  <tr key={a.id}>
+                  <tr key={a._id}>
                     <td>{index + 1}</td>
 
                     <td>
                       <Badge bg="primary">
-                        CLW-{String(a.id).slice(-6)}
+                        CLW-{a._id.slice(-6)}
                       </Badge>
                     </td>
 
@@ -140,13 +137,17 @@ export default function AdminAppointments() {
                     <td>{a.date}</td>
                     <td>{a.time}</td>
                     <td>{a.reason || "-"}</td>
-                    <td>{a.city}</td>
+                    <td>{a.doctorCity}</td>
 
                     <td>
                       <Badge
                         bg={
-                          a.status === "Approved"
+                          a.status === "approved"
                             ? "success"
+                            : a.status === "rejected"
+                            ? "danger"
+                            : a.status === "completed"
+                            ? "primary"
                             : "warning"
                         }
                         text="dark"
@@ -156,21 +157,10 @@ export default function AdminAppointments() {
                     </td>
 
                     <td>
-                      {a.status !== "Approved" && (
-                        <Button
-                          variant="success"
-                          size="sm"
-                          className="me-2"
-                          onClick={() => handleApprove(a.id)}
-                        >
-                          Approve
-                        </Button>
-                      )}
-
                       <Button
                         variant="outline-danger"
                         size="sm"
-                        onClick={() => handleCancel(a.id)}
+                        onClick={() => handleCancel(a._id)}
                       >
                         Cancel
                       </Button>

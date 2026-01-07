@@ -1,0 +1,100 @@
+/* ===== PAGE WRAPPER ===== */
+.doctor-admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #eef3f8, #dfe9f3);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== LOGIN CARD ===== */
+.da-login-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== HEADER ===== */
+.da-login-card h3 {
+  text-align: center;
+  margin-bottom: 6px;
+  color: #2f4f6f;
+}
+
+.da-login-card p {
+  text-align: center;
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 25px;
+}
+
+/* ===== FORM ===== */
+.da-login-card label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.da-login-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 18px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.da-login-card input:focus {
+  border-color: #3a609b;
+  box-shadow: 0 0 0 2px rgba(58, 96, 155, 0.2);
+}
+
+/* ===== BUTTON ===== */
+.da-login-btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: 6px;
+  border: none;
+  background: #3a609b;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.da-login-btn:hover {
+  background: #2e4f85;
+}
+
+.da-login-btn:active {
+  transform: scale(0.98);
+}
+
+.da-login-btn:disabled {
+  background: #9bb0cf;
+  cursor: not-allowed;
+}
+
+/* ===== FOOTER TEXT ===== */
+.da-login-footer {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #6c757d;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .da-login-card {
+    padding: 24px 20px;
+  }
+}

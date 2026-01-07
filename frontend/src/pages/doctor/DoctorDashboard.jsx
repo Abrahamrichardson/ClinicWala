@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosClient from "../../api/axiosClient";
 import { Table, Button, Badge } from "react-bootstrap";
+import SummaryCards from "./SummaryCards";
 
 export default function DoctorDashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -17,7 +18,7 @@ export default function DoctorDashboard() {
     try {
       const res = await axiosClient.get("/appointments/doctor/my");
       setAppointments(res.data);
-    } catch (err) {
+    } catch {
       alert("Failed to load appointments");
     } finally {
       setLoading(false);
@@ -31,7 +32,7 @@ export default function DoctorDashboard() {
     try {
       await axiosClient.put(`/appointments/${id}/approve`);
       loadAppointments();
-    } catch (err) {
+    } catch  {
       alert("Failed to approve appointment");
     }
   };
@@ -43,7 +44,7 @@ export default function DoctorDashboard() {
     try {
       await axiosClient.put(`/appointments/${id}/reject`);
       loadAppointments();
-    } catch (err) {
+    } catch  {
       alert("Failed to reject appointment");
     }
   };
@@ -55,7 +56,7 @@ export default function DoctorDashboard() {
     try {
       await axiosClient.put(`/appointments/${id}/complete`);
       loadAppointments();
-    } catch (err) {
+    } catch  {
       alert("Failed to mark completed");
     }
   };
@@ -67,7 +68,8 @@ export default function DoctorDashboard() {
   return (
     <div className="container mt-4">
       <h3 className="mb-3">👨‍⚕️ Doctor Dashboard</h3>
-
+ {/* SUMMARY CARDS */}
+  <SummaryCards />
       <Table striped bordered hover responsive>
         <thead>
           <tr>

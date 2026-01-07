@@ -21,7 +21,7 @@ export default function AdminAnalytics() {
     try {
       const res = await getAdminStats();
       setStats(res.data);
-    } catch (err) {
+    } catch  {
       alert("Failed to load analytics");
     }
   };
