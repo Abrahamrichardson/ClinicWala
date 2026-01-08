@@ -1,6 +1,6 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 
-export default function DoctorRoute({ children }) {
+export default function DoctorRoute() {
   const location = useLocation();
 
   const token = localStorage.getItem("token");
@@ -22,6 +22,6 @@ export default function DoctorRoute({ children }) {
     return <Navigate to="/" replace />;
   }
 
-  // ✅ Doctor allowed
-  return children;
+  // ✅ Doctor allowed → render nested routes
+  return <Outlet />;
 }

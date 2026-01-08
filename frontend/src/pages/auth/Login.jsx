@@ -36,6 +36,11 @@ function Login() {
         return;
       }
 
+       if (role === "manger"){
+        navigate("/")
+      return;
+    }
+
       // ✅ ONLY patient allowed
       if (role !== "patient") {
         alert("Unauthorized access");

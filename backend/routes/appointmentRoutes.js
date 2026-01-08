@@ -206,4 +206,35 @@ router.get("/patient/my", protect, async (req, res) => {
   res.json(apps);
 });
 
+/* =========================================
+   UPDATE APPOINTMENT STATUS (DOCTOR)
+========================================= */
+router.put("/:id/status", protect, async (req, res) => {
+  try {
+    if (req.user.role !== "doctor") {
+      return res.status(403).json({ message: "Doctors only" });
+    }
+
+    const { status } = req.body;
+
+    const appointment = await Appointment.findById(req.params.id);
+
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    appointment.status = status;
+    await appointment.save();
+
+    res.json({
+      message: "✅ Status updated",
+      appointment,
+    });
+  } catch (err) {
+    console.error("STATUS UPDATE ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 module.exports = router;

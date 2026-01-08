@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { getDoctorAppointments, updateAppointmentStatus } from "../../api/doctorApi";
 
@@ -30,7 +31,7 @@ export default function DoctorAppointments() {
 
   if (loading) {
     return (
-      <div className="container py-4 text-center">
+      <div className="text-center py-4">
         <div className="spinner-border" />
         <p>Loading your appointments...</p>
       </div>
@@ -38,8 +39,8 @@ export default function DoctorAppointments() {
   }
 
   return (
-    <div className="container py-4">
-      <h2 className="mb-4">My Appointments</h2>
+    <>
+      <h3 className="mb-4">📅 My Appointments</h3>
 
       <div className="table-responsive">
         <table className="table table-bordered align-middle">
@@ -56,16 +57,12 @@ export default function DoctorAppointments() {
           <tbody>
             {appts.map((a) => (
               <tr key={a._id}>
-                {/* ✅ FIXED patient field */}
                 <td>{a.patientId?.name || "-"}</td>
 
-                <td>
-                  {a.date} {a.time}
-                </td>
+                <td>{a.date} {a.time}</td>
 
                 <td>{a.reason || "-"}</td>
 
-                {/* ✅ FIXED status mapping */}
                 <td>
                   <span
                     className={`badge ${
@@ -122,6 +119,6 @@ export default function DoctorAppointments() {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }

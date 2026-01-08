@@ -52,7 +52,7 @@ app.use("/api/admin", adminSubcategoryRoutes);
 
 // 👨‍⚕️ DOCTOR ROUTES
 app.use("/api/doctor", doctorRoutes);
-
+app.use("/api/appointments", appointmentRoutes);
 /* ======================
    DB CONNECTION
 ====================== */

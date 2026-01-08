@@ -23,7 +23,7 @@ import FoodDiet from "./pages/FoodDiet";
 import FindCure from "./pages/FindCure";
 import FindCureTopic from "./pages/FindCureTopic";
 import About from "./pages/About";
-import Login from "./pages/auth/Login"; // Patient login
+import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import BookDoctor from "./pages/BookDoctor";
 import DoctorDetails from "./pages/DoctorsDetails.jsx";
@@ -47,14 +47,14 @@ import AdminSettings from "./pages/admin/AdminSettings";
 
 /* DOCTOR & PATIENT */
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
+import DoctorAppointments from "./pages/doctor/DoctorAppointments";
 import PatientDashboard from "./pages/patient/PatientDashboard";
+
+/* DOCTOR LAYOUT */
+import DoctorLayout from "./pages/doctor/layout/DoctorLayout";
 
 /* 🔐 DOCTOR + ADMIN LOGIN */
 import DoctorAdminLogin from "./pages/auth/DoctorAdminLogin";
-
-import DoctorAppointments from "./pages/doctor/DoctorAppointments";
-import DoctorLayout from "./pages/doctor/layout/DoctorLayout";
-
 
 export default function App() {
   const location = useLocation();
@@ -63,7 +63,7 @@ export default function App() {
     AOS.init({ duration: 800, easing: "ease-in-out" });
   }, []);
 
-  // 🔒 Hide navbar & footer on dashboards + admin/doctor login
+  /* 🔒 Hide navbar & footer on dashboards + login */
   const hideLayout =
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/doctor") ||
@@ -77,38 +77,12 @@ export default function App() {
       <Routes>
         {/* ================= PUBLIC ================= */}
         <Route path="/" element={<Home />} />
-
-        {/* 👨‍⚕️🛠 Doctor + Admin Login */}
-        <Route path="/login/dashboard" element={<DoctorAdminLogin />} />
-         <Route
-  path="/doctor/dashboard"
-  element={
-    <DoctorRoute>
-      <DoctorDashboard />
-    </DoctorRoute>
-  }
-/>
-
-<Route
-  path="/doctor/appointments"
-  element={
-    <DoctorRoute>
-      <DoctorAppointments />
-    </DoctorRoute>
-  }
-/>
-
-        {/* 🧑 Patient Login */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/about" element={<About />} />
-
         <Route path="/services" element={<Services />} />
         <Route path="/telemedicine" element={<EClinic />} />
         <Route path="/eclinic" element={<EClinic />} />
-
         <Route path="/food-diet" element={<FoodDiet />} />
         <Route path="/food-diet/:recipeName" element={<RecipeDetails />} />
+        <Route path="/about" element={<About />} />
 
         <Route path="/doctors" element={<BookDoctor />} />
         <Route path="/doctor/:id" element={<DoctorDetails />} />
@@ -124,66 +98,46 @@ export default function App() {
         <Route path="/order-test" element={<OrderTest />} />
         <Route path="/get-medicines" element={<GetMedicines />} />
 
+        {/* ================= AUTH ================= */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* 👨‍⚕️🛠 Doctor + Admin Login */}
+        <Route path="/login/dashboard" element={<DoctorAdminLogin />} />
+
         {/* ================= ADMIN ================= */}
         <Route path="/admin" element={<AdminRoute />}>
           <Route element={<AdminLayout />}>
-
-            {/* DEFAULT → DASHBOARD */}
             <Route index element={<Navigate to="dashboard" replace />} />
-
             <Route path="dashboard" element={<AdminAnalytics />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="doctors" element={<AdminDoctors />} />
             <Route path="appointments" element={<AdminAppointments />} />
-
-            <Route
-              path="catalog/categories"
-              element={<AdminCategories />}
-            />
-            <Route
-              path="catalog/subcategories"
-              element={<AdminSubcategories />}
-            />
-            <Route
-              path="catalog/courses"
-              element={<AdminCourses />}
-            />
-
+            <Route path="catalog/categories" element={<AdminCategories />} />
+            <Route path="catalog/subcategories" element={<AdminSubcategories />} />
+            <Route path="catalog/courses" element={<AdminCourses />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Route>
 
-{/* ================= DOCTOR WITH SIDEBAR ================= */}
-<Route path="/doctor" element={<DoctorRoute />}>
-  <Route element={<DoctorLayout />}>
-    <Route index element={<Navigate to="dashboard" replace />} />
-    <Route path="dashboard" element={<DoctorDashboard />} />
-    <Route path="appointments" element={<DoctorAppointments />} />
-  </Route>
-</Route>
-
-        {/* ================= DOCTOR ================= */}
-        <Route
-          path="/doctor/dashboard"
-          element={
-            <DoctorRoute>
-              <DoctorDashboard />
-            </DoctorRoute>
-          }
-        />
+        {/* ================= DOCTOR (WITH SIDEBAR) ================= */}
+        <Route path="/doctor" element={<DoctorRoute />}>
+          <Route element={<DoctorLayout />}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<DoctorDashboard />} />
+            <Route path="appointments" element={<DoctorAppointments />} />
+          </Route>
+        </Route>
 
         {/* ================= PATIENT ================= */}
-        <Route
-          path="/patient/dashboard"
-          element={
-            <PatientRoute>
-              <PatientDashboard />
-            </PatientRoute>
-          }
-        />
+        <Route path="/patient/dashboard" element={
+          <PatientRoute>
+            <PatientDashboard />
+          </PatientRoute>
+        } />
 
-        {/* ❌ UNKNOWN ROUTE */}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* ================= FALLBACK ================= */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       {!hideLayout && <FooterSection />}

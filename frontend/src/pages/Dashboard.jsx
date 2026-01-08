@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadUser();
-  }, []);
+  }, );
 
   const handleLogout = () => {
     localStorage.removeItem("token");
