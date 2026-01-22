@@ -2,27 +2,27 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const Appointment = require("../models/Appointment");
-const authMiddleware = require("../middleware/authmiddleware");
+
+const protect = require("../middleware/protect");
 const isAdmin = require("../middleware/adminMiddleware");
+
 const { getDashboardStats } = require("../controller/dashboardController");
 
 const router = express.Router();
 
-/* -----------------------------------------
+/* =====================================================
    🔐 PROTECT ALL ADMIN ROUTES
------------------------------------------ */
-router.use(authMiddleware, isAdmin);
+===================================================== */
+router.use(protect, isAdmin);
 
-/* -----------------------------------------
+/* =====================================================
    📊 ADMIN – DASHBOARD STATS
-   GET /api/admin/dashboard
------------------------------------------ */
+===================================================== */
 router.get("/dashboard", getDashboardStats);
 
-/* -----------------------------------------
+/* =====================================================
    👨‍⚕️ ADMIN – CREATE DOCTOR
-   POST /api/admin/doctors
------------------------------------------ */
+===================================================== */
 router.post("/doctors", async (req, res) => {
   try {
     const {
@@ -37,14 +37,13 @@ router.post("/doctors", async (req, res) => {
       image,
     } = req.body;
 
-    // ✅ Required fields check
     if (!name || !phone || !password) {
-      return res
-        .status(400)
-        .json({ message: "Name, phone and password are required" });
+      return res.status(400).json({
+        success: false,
+        message: "Name, phone and password are required",
+      });
     }
 
-    // ✅ Duplicate check (safe)
     const existingUser = await User.findOne({
       $or: [
         email ? { email } : null,
@@ -53,23 +52,20 @@ router.post("/doctors", async (req, res) => {
     });
 
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "Email or phone already exists" });
+      return res.status(400).json({
+        success: false,
+        message: "Email or phone already exists",
+      });
     }
 
-    // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ✅ Create doctor user
     const doctor = await User.create({
       name,
       email: email || "",
       phone,
       password: hashedPassword,
       role: "doctor",
-
-      // optional doctor fields
       specialization: specialization || "",
       fees: fees || 0,
       experience: experience || "0",
@@ -83,47 +79,44 @@ router.post("/doctors", async (req, res) => {
       doctor: {
         _id: doctor._id,
         name: doctor.name,
-        specialization: doctor.specialization,
         phone: doctor.phone,
+        specialization: doctor.specialization,
         city: doctor.city,
       },
     });
   } catch (err) {
     console.error("ADMIN ADD DOCTOR ERROR:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
-/* -----------------------------------------
+/* =====================================================
    📋 ADMIN – GET ALL DOCTORS
-   GET /api/admin/doctors
------------------------------------------ */
+===================================================== */
 router.get("/doctors", async (req, res) => {
   try {
     const doctors = await User.find({ role: "doctor" })
       .select("-password")
       .sort({ createdAt: -1 });
 
-    res.json({
-      success: true,
-      doctors,
-    });
+    res.json({ success: true, doctors });
   } catch (err) {
-    console.error("ADMIN GET DOCTORS ERROR:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
-/* -----------------------------------------
+/* =====================================================
    🗑️ ADMIN – DELETE DOCTOR
-   DELETE /api/admin/doctors/:id
------------------------------------------ */
+===================================================== */
 router.delete("/doctors/:id", async (req, res) => {
   try {
     const doctor = await User.findById(req.params.id);
 
     if (!doctor || doctor.role !== "doctor") {
-      return res.status(404).json({ message: "Doctor not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found",
+      });
     }
 
     await doctor.deleteOne();
@@ -133,8 +126,7 @@ router.delete("/doctors/:id", async (req, res) => {
       message: "Doctor deleted successfully",
     });
   } catch (err) {
-    console.error("ADMIN DELETE DOCTOR ERROR:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 

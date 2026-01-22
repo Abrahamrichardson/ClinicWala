@@ -19,4 +19,8 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Category", categorySchema);
+// ✅ IMPORTANT FIX LINE
+module.exports =
+  mongoose.models.Category ||
+  mongoose.model("Category", categorySchema);
+  

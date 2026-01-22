@@ -20,7 +20,6 @@ export default function AppointmentSuccess() {
   return (
     <div className="container py-5" style={{ maxWidth: "600px" }}>
       <Card className="shadow p-4 text-center">
-
         <i
           className="bi bi-check-circle-fill text-success"
           style={{ fontSize: "70px" }}

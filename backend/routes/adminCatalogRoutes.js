@@ -6,7 +6,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const isAdmin = require("../middleware/adminMiddleware");
 
 // ✅ Models
-const Category = require("../models/Category");
+const Category = require("../models/category");
 const Subcategory = require("../models/Subcategory");
 const Course = require("../models/Course");
 

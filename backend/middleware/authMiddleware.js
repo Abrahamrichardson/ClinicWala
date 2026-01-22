@@ -18,7 +18,7 @@ module.exports = async function (req, res, next) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    req.user = user; // 🔥 VERY IMPORTANT
+    req.user = user;
     next();
   } catch (err) {
     return res.status(401).json({ message: "Token invalid or expired" });
