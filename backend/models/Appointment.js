@@ -29,11 +29,9 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
 
-    // 🔥 MOST IMPORTANT FIX
     fee: {
       type: Number,
-      required: true,     // ❌ missing earlier
-      default: 0,         // safety
+      required: true,
       min: 0,
     },
 
